@@ -12,11 +12,13 @@ public data class Farm(
         var name: String = "",
         //todo add logo of the farm
         //todo add images of the farm
+        @Lob
+        var description:String="",
         @Embedded
         var site: Site = Site(),
         @ManyToMany(mappedBy = "farms")
         var farmers: MutableSet<Farmer> = HashSet<Farmer>(),
-        @ManyToMany(mappedBy="farms")
+        @ManyToMany(mappedBy = "farms")
         var products: MutableSet<Product> = HashSet<Product>()
 ) {
 
@@ -24,6 +26,7 @@ public data class Farm(
     public data class Site(
             var address: String = "",
             var city: String = "",
+            var stateProvince: String = "",
             var country: String = "",
             var postalCode: String = "",
             var directions: String = "",

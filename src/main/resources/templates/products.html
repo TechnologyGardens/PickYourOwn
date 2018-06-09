@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Products</title>
-</head>
+<head th:replace="fragments/head(pageTitle='Products')"></head>
 <body>
+<div th:replace="fragments/navigation(selectedPage='Products')"></div>
 <h1>Available Products</h1>
+
 <table>
     <tr>
         <th>Id</th>
         <th>Name</th>
         <th>Farms</th>
+        <th>Categories</th>
     </tr>
     <tr th:each="product:${products}">
         <td th:text="${product.id}">1</td>
         <td th:text="${product.name}">Apple</td>
         <td th:text="${product.farms}">List of farms</td>
+        <td th:text="${product.categories}">List of farms</td>
     </tr>
 </table>
 </body>

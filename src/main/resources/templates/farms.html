@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Farms</title>
-</head>
+<head th:replace="fragments/head(pageTitle='Farms')"></head>
 <body>
+<div th:replace="fragments/navigation(selectedPage='Farms')"></div>
 <h1>Participating Farms</h1>
+
 <table>
     <tr>
         <th>Id</th>
         <th>Name</th>
         <th>Site</th>
+        <th>Farmers</th>
+        <th>Products</th>
     </tr>
     <tr th:each="farm:${farms}">
         <td th:text="${farm.id}">1</td>
         <td th:text="${farm.name}">Bunkera</td>
         <td th:text="${farm.site}">Site description</td>
+        <td th:text="${farm.farmers}">Bunkera</td>
+        <td th:text="${farm.products}">Site description</td>
     </tr>
 </table>
 </body>

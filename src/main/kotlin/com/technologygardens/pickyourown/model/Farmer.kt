@@ -10,7 +10,8 @@ class Farmer(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long = 0L,
-        var name: String = "",
+        var firstName: String = "",
+        var lastName: String = "",
         //todo add image or avatar
         var email: String = "",
         var social: String = "",

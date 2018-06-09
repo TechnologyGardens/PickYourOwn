@@ -9,15 +9,11 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer
 
 @Configuration
 @PropertySource("classpath:datasource.properties")
-data class PropertyConfig(
-        @Value("\${ds.username}")
-        var user: String? =null,
-        @Value("\${ds.password}")
-        var password: String? =null,
-        @Value("\${ds.name}")
-        var database: String? =null,
-        @Value("\${ds.url}")
-        var url: String? =null
+open class PropertyConfig(
+        @Value("%{ds.username}") var user: String? = null,
+        @Value("%{ds.password}") var password: String? = null,
+        @Value("%{ds.firstName}") var database: String? = null,
+        @Value("%{ds.url}") var url: String? = null
 ) {
     @Bean
     fun fakeDataSourceConfig(): FakeDataSourceConfig {
@@ -25,7 +21,12 @@ data class PropertyConfig(
     }
 
     @Bean
-    fun properties(): PropertySourcesPlaceholderConfigurer {
-        return PropertySourcesPlaceholderConfigurer()
+    fun kotlinPropertyConfigurer() = PropertySourcesPlaceholderConfigurer().apply {
+        setPlaceholderPrefix("%{")
+        setIgnoreUnresolvablePlaceholders(true)
     }
+
+    @Bean
+    fun properties() = PropertySourcesPlaceholderConfigurer()
+
 }

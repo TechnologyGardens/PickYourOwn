@@ -1,0 +1,28 @@
+.footer{text-align: right;}
+.navigationBar{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow: auto;
+}
+.navigationItem > a{
+    float: left;
+    padding: 2px 16px;
+    border-bottom: 2px solid #EAEAEA;
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.activeItem > a{
+    float: left;
+    padding: 2px 16px;
+    border-bottom: 2px solid #4CAF50;
+    color: #7A7A7A;
+    text-decoration: none;
+}
+
+h1{
+    color: #7A7A7A;
+    font-size: 1.5em;
+}

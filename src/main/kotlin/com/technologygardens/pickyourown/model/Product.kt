@@ -9,7 +9,10 @@ class Product(@Id
               var name: String = "",
               @ManyToMany
               @JoinTable(name="farm_products",joinColumns = arrayOf(JoinColumn(name="farm_id")),inverseJoinColumns = arrayOf(JoinColumn(name="product_id")))
-              var farms: MutableSet<Farm> = HashSet<Farm>()
+              var farms: MutableSet<Farm> = HashSet<Farm>(),
+              @ManyToMany
+              @JoinTable(name="category_products",joinColumns = arrayOf(JoinColumn(name="category_id")),inverseJoinColumns = arrayOf(JoinColumn(name="product_id")))
+              var categories: MutableSet<Category> = HashSet<Category>()
 ) {
 
 }

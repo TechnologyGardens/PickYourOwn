@@ -13,10 +13,4 @@ fun main(args: Array<String>) {
     val context: ApplicationContext = runApplication<PickyourownApplication>(*args)
     val fds = context.getBean(FakeDataSourceConfig::class) as FakeDataSourceConfig
     println("#############"+fds.username)
-    /*val beanNames = context.getBeanDefinitionNames()
-    Arrays.sort(beanNames)
-    for (beanName in beanNames) {
-        println(beanName)
-    }*/
-
 }
