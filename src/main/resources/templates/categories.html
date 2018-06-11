@@ -15,7 +15,7 @@
     <tr th:each="category:${categories}">
         <td th:text="${category.id}">1</td>
         <td th:text="${category.name}">Apple</td>
-        <td th:text="${category.products}">List of farms</td>
+        <td th:text="${category.getProducts()}">List of farms</td>
     </tr>
 </table>
 </body>

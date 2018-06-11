@@ -1,29 +1,60 @@
 package com.technologygardens.pickyourown.model
 
-import java.util.*
 import javax.persistence.*
-import kotlin.collections.HashSet
 
 @Entity
-public data class Farm(
+data class Farm(
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = 0L,
         var name: String = "",
         //todo add logo of the farm
         //todo add images of the farm
         @Lob
-        var description:String="",
+        var description: String = "",
         @Embedded
-        var site: Site = Site(),
-        @ManyToMany(mappedBy = "farms")
-        var farmers: MutableSet<Farmer> = HashSet<Farmer>(),
-        @ManyToMany(mappedBy = "farms")
-        var products: MutableSet<Product> = HashSet<Product>()
+        var site: Site = Site()
 ) {
+    @ManyToMany(mappedBy = "farms")
+    private var farmers: MutableSet<Farmer> = HashSet<Farmer>()
+
+    @ManyToMany(mappedBy = "farms")
+    private var products: MutableSet<Product> = HashSet<Product>()
+
+    fun addFarmerRelationship(farmer: Farmer) {
+        if (!farmers.contains(farmer)) {
+            farmers.add(farmer)
+            farmer.addFarmRelationship(this)
+        }
+    }
+
+    fun addProductRelationship(product: Product) {
+        if (!products.contains(product)) {
+            products.add(product)
+            product.addFarmRelationship(this)
+        }
+    }
+
+    fun getFarmers(): Set<Farmer> = farmers
+
+    fun getProducts(): Set<Product> = products
+
+    fun removeFarmerRelationship(farmer: Farmer) {
+        if (farmers.contains(farmer)) {
+            farmers.add(farmer)
+            farmer.removeFarmRelationship(this)
+        }
+    }
+
+    fun removeProductRelationship(product: Product) {
+        if (products.contains(product)) {
+            products.add(product)
+            product.removeFarmRelationship(this)
+        }
+    }
 
     @Embeddable
-    public data class Site(
+    data class Site(
             var address: String = "",
             var city: String = "",
             var stateProvince: String = "",

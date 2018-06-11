@@ -14,7 +14,7 @@
     <tr th:each="farmer:${farmers}">
         <td th:text="${farmer.id}">1</td>
         <td th:text="${farmer.firstName +' '+ farmer.lastName}">Hristo Aladjov</td>
-        <td th:text="${farmer.farms}">farms</td>
+        <td th:text="${farmer.getFarms()}">farms</td>
     </tr>
 </table>
 </body>
