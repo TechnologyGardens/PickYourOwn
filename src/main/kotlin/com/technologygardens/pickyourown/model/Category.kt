@@ -1,5 +1,7 @@
 package com.technologygardens.pickyourown.model
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import javax.persistence.*
 
 @Entity
@@ -16,6 +18,7 @@ data class Category(
         if (!products.contains(product)) {
             products.add(product)
             product.addCategoryRelationship(this)
+            logger.debug("Add Product ${this.id} (${this.name}) Product ${product.id} (${product.name}) Relationship")
         }
     }
 
@@ -25,6 +28,12 @@ data class Category(
         if (products.contains(product)) {
             products.remove(product)
             product.removeCategoryRelationship(this)
+            logger.debug("Remove Product ${this.id} (${this.name}) Product ${product.id} (${product.name}) Relationship")
         }
     }
+
+    private companion object {
+        val logger : Logger = LoggerFactory.getLogger(this::class.java)
+    }
+
 }

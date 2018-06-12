@@ -1,5 +1,7 @@
 package com.technologygardens.pickyourown.model
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import javax.persistence.*
 
 @Entity
@@ -25,6 +27,8 @@ data class Farm(
         if (!farmers.contains(farmer)) {
             farmers.add(farmer)
             farmer.addFarmRelationship(this)
+            logger.debug("Add Farm ${this.id} (${this.name}) Farmer ${farmer.id} (${farmer.getName()}) Relationship")
+
         }
     }
 
@@ -32,6 +36,7 @@ data class Farm(
         if (!products.contains(product)) {
             products.add(product)
             product.addFarmRelationship(this)
+            logger.debug("Add Farm ${this.id} (${this.name}) Product ${product.id} (${product.name}) Relationship")
         }
     }
 
@@ -43,6 +48,7 @@ data class Farm(
         if (farmers.contains(farmer)) {
             farmers.add(farmer)
             farmer.removeFarmRelationship(this)
+            logger.debug("Remove Farm ${this.id} (${this.name}) Farmer ${farmer.id} (${farmer.getName()}) Relationship")
         }
     }
 
@@ -50,6 +56,7 @@ data class Farm(
         if (products.contains(product)) {
             products.add(product)
             product.removeFarmRelationship(this)
+            logger.debug("Remove Farm ${this.id} (${this.name}) Product ${product.id} (${product.name}) Relationship")
         }
     }
 
@@ -67,4 +74,9 @@ data class Farm(
             var social: String = "",
             var web: String = ""
     )
+
+    companion object {
+        val logger : Logger = LoggerFactory.getLogger(this::class.java)
+    }
+
 }

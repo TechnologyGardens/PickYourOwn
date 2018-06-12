@@ -1,5 +1,7 @@
 package com.technologygardens.pickyourown.model
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.util.*
 import javax.persistence.*
 
@@ -14,8 +16,7 @@ class Farmer(
         var email: String = "",
         var social: String = "",
         var web: String = "",
-        var telephone: String = "")
-{
+        var telephone: String = "") {
 
     @ManyToMany
     @JoinTable(name = "farm_farmers", joinColumns = arrayOf(JoinColumn(name = "farmer_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "farm_id")))
@@ -25,15 +26,20 @@ class Farmer(
         if (!farms.contains(farm)) {
             farms.add(farm)
             farm.addFarmerRelationship(this)
+            logger.debug("Add Farmer ${this.id} (${this.getName()}) Farm ${farm.id} (${farm.name}) Relationship")
+
         }
     }
 
-    fun getFarms() : Set<Farm> = farms
+    fun getName(): String = """${this.firstName} ${this.lastName}"""
+
+    fun getFarms(): Set<Farm> = farms
 
     fun removeFarmRelationship(farm: Farm) {
         if (farms.contains(farm)) {
             farms.remove(farm)
             farm.removeFarmerRelationship(this)
+            logger.debug("Remove Farmer ${this.id} (${this.getName()}) Farm ${farm.id} (${farm.name}) Relationship")
         }
     }
 
@@ -51,4 +57,9 @@ class Farmer(
     override fun hashCode(): Int {
         return id.hashCode()
     }
+
+    private companion object {
+        val logger: Logger = LoggerFactory.getLogger(this::class.java)
+    }
+
 }
