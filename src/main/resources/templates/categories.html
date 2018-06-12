@@ -12,10 +12,10 @@
         <th>Name</th>
         <th>Products</th>
     </tr>
-    <tr th:each="category:${categories}">
+    <tr th:each="category:${farms}">
         <td th:text="${category.id}">1</td>
         <td th:text="${category.name}">Apple</td>
-        <td th:text="${category.getProducts()}">List of farms</td>
+        <td th:text="${category.getProducts()}">List of farmers</td>
     </tr>
 </table>
 </body>

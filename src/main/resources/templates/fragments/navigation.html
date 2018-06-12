@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <ul class="navigationBar" th:fragment="navigation(selectedPage)">
     <li th:class="${#strings.equals(selectedPage,'Home')} ? activeItem : 'navigationItem'" ><a href="/">Home</a></li>
-    <li th:class="${#strings.equals(selectedPage,'Farms')} ? activeItem : 'navigationItem'" ><a href="/v1/farms">Farms</a></li>
+    <li th:class="${#strings.equals(selectedPage,'Farms')} ? activeItem : 'navigationItem'" ><a href="/v1/farmers">Farms</a></li>
     <li th:class="${#strings.equals(selectedPage,'Farmers')} ? activeItem : 'navigationItem'"  ><a href="/v1/farmers">Farmers</a></li>
     <li th:class="${#strings.equals(selectedPage,'Products')} ? activeItem : 'navigationItem'" ><a href="/v1/products">Products</a></li>
-    <li th:class="${#strings.equals(selectedPage,'Categories')} ? activeItem : 'navigationItem'" ><a href="/v1/categories">Categories</a></li>
+    <li th:class="${#strings.equals(selectedPage,'Categories')} ? activeItem : 'navigationItem'" ><a href="/v1/farms">Categories</a></li>
 </ul>
 </html>

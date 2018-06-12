@@ -46,7 +46,7 @@ data class Farm(
 
     fun removeFarmerRelationship(farmer: Farmer) {
         if (farmers.contains(farmer)) {
-            farmers.add(farmer)
+            farmers.remove(farmer)
             farmer.removeFarmRelationship(this)
             logger.debug("Remove Farm ${this.id} (${this.name}) Farmer ${farmer.id} (${farmer.getName()}) Relationship")
         }
@@ -54,7 +54,7 @@ data class Farm(
 
     fun removeProductRelationship(product: Product) {
         if (products.contains(product)) {
-            products.add(product)
+            products.remove(product)
             product.removeFarmRelationship(this)
             logger.debug("Remove Farm ${this.id} (${this.name}) Product ${product.id} (${product.name}) Relationship")
         }
