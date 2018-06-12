@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
 class IndexController{
-    @RequestMapping("","/","/index")
+    @RequestMapping("","/","/index","/default")
     fun getIndexPage():String{
         return "index"
     }
