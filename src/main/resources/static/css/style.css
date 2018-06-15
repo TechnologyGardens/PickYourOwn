@@ -1,4 +1,4 @@
-.footer{text-align: right;}
+.footer{text-align: center;}
 .navigationBar{
     list-style-type: none;
     margin: 0;
@@ -25,4 +25,39 @@
 h1{
     color: #7A7A7A;
     font-size: 1.5em;
+    margin-left: 12px;
+
+}
+
+.searchResult{
+    display: block;
+    padding-bottom: 18px;
+}
+
+.resultHeading{
+    display: block;
+    border-bottom: 1px solid #4CAF50;
+    padding-bottom: 0px;
+}
+
+.resultTitle{
+    color: #7A7A7A;
+}
+
+.address{
+    color: #7A7A7A;
+    margin-top: 0px;
+}
+.hours{
+    color: #4CAF50;
+    margin-top: 12px;
+}
+
+.card-columns {
+  @include media-breakpoint-only(lg) {
+    column-count: 5;
+  }
+  @include media-breakpoint-only(xl) {
+    column-count: 6;
+  }
 }

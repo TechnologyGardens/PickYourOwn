@@ -5,7 +5,7 @@
 <div th:replace="fragments/navigation(selectedPage='Products')"></div>
 <h1>Available Products</h1>
 
-<table>
+<table class="Table">
     <tr>
         <th>Id</th>
         <th>Name</th>
@@ -19,5 +19,6 @@
         <td th:text="${product.getCategories()}">List of farmers</td>
     </tr>
 </table>
+<div th:replace="fragments/footer"></div>
 </body>
 </html>

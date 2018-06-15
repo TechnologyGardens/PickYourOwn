@@ -1,4 +1,4 @@
-package com.technologygardens.pickyourown.controllers
+package com.technologygardens.pickyourown.controllers.v1
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping

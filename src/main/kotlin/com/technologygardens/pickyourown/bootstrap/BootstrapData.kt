@@ -24,7 +24,7 @@ class BootstrapData(private var farmRepository: FarmRepository,
     }
 
     fun generateData() {
-        val bunkera = Farm(name = "Bunkera", site = Farm.Site(address = "55 Bistrishko Shose", city = "Sofia", country = "Bulgaria", postalCode = "1000", directions = "After a sharp turn on the road to Bistrica"))
+        val bunkera = Farm(name = "Bunkera", description = "Bunkera is a small family garden, packed with diverse traditional and exotic produce", site = Farm.Site(address = "55 Bistrishko Shose", city = "Sofia", country = "Bulgaria", postalCode = "1000", directions = "After a sharp turn on the road to Bistrica", hours = "Mon closed, Tue-Fri 8-18h, Sat-Sun 10-20h"))
         val zahari = Farm(name = "Zahari Stoyanovo", site = Farm.Site(city = "Zahari Stoianovo", country = "Bulgaria"))
         farmRepository.save(bunkera)
         farmRepository.save(zahari)

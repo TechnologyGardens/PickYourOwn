@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head(pageTitle=${'Pick Your Own:'+farm.name})"></head>
+<body>
+<div th:replace="fragments/navigation(selectedPage='Farm')"></div>
+<!--/*@thymesVar id="farm" type="com.technologygardens.pickyourown.model.Farm"*/-->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2 class="resultTitle" th:text="${farm.name}">Farm Name</h2>
+            <p th:text="${farm.description}">It is small family farm</p>
+            <br>
+            <h3>When to visit</h3>
+            <p th:text="${farm.site.seasonOpens==farm.site.seasonCloses?'Year-round':'Opens:'+farm.site.seasonOpens+' closes:'+farm.site.seasonCloses}">
+                Opens in May</p>
+            <h3>Hours</h3>
+            <div class="hours" th:text="${farm.site.hours}"></div>
+        </div>
+
+        <div class="col">
+            <img style="height: 400px; padding:0;margin-top:40px"
+                 src="http://greybrucebusinessjournal.ca/wp-content/uploads/2014/10/farm-2.jpg">
+        </div>
+    </div>
+
+    <h2 class="resultTitle">Products:</h2>
+    <div class="row">
+        <div class="col">
+            <div class="card-columns">
+                <div th:each="product:${farm.getProducts()}" class="card" style="width:300px">
+                    <a href="#" th:href="@{'/v1/products/'+${product.id}}">
+                    <img class="card-img-top"
+                         src="https://cdn.vox-cdn.com/thumbor/Sdt-WzPGHotCu6RSe0WyFN0LUaM=/0x0:1920x1280/2120x1413/filters:focal(807x487:1113x793):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/57340051/apples_2811968_1920.0.jpg"
+                         alt="Card image"></a>
+                    <div class="card-body">
+                        <a href="#" th:href="@{'/v1/products/'+${product.id}}"><h3 th:text="${product.name}" class="card-title">Apple</h3></a>
+                        <p class="card-text">Some example text.</p>
+                        <a href="#" th:href="@{'/v1/products/'+${product.id}}" class="btn btn-primary">See Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 class="resultTitle">How to reach us</h2>
+    <div class="row">
+        <div class="col">
+            <iframe width="100%" height="540" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=17.050781250000004%2C40.287906612507406%2C31.190185546875004%2C45.120052841530544&amp;layer=mapnik"></iframe>
+            <br/>
+            <small><a href="https://www.openstreetmap.org/#map=7/42.751/24.120">View Larger Map</a></small>
+        </div>
+
+        <div class="col">
+            <div class="card-deck">
+                <div th:each="farmer:${farm.farmers}" class="card" style="width:300px">
+                    <a th:href="@{'/v1/farmers/'+${farmer.id}}" href="#" >
+                    <img class="card-img-top"
+                         src="http://biomed.bas.bg/en/wp-content/uploads/2012/02/hristo_aladjov.jpg"
+                         alt="Card image"></a>
+                    <div class="card-body">
+                        <a th:href="@{'/v1/farmers/'+${farmer.id}}" href="#" ><h5 th:text="${farmer.firstName +' '+ farmer.lastName}" class="card-title">Hristo Aladjov</h5></a>
+                        <div th:text="${farmer.email}">e-mail</div>
+                        <div th:text="${farmer.telephone}">telephone</div>
+                        <a th:href="@{'/v1/farmers/'+${farmer.id}}" href="#" class="btn btn-primary">See Profile</a>
+                    </div>
+                </div>
+            </div>
+
+            <h4>Address:</h4>
+            <span class="address"
+                  th:text="${farm.site.address+' '+farm.site.city+' '+farm.site.postalCode+','+farm.site.country}"></span><br>
+            <h4>Directions:</h4>
+            <span class="directions" th:text="${farm.site.directions}"></span><br>
+        </div>
+    </div>
+
+</div> <!-- /container -->
+
+<div th:replace="fragments/footer"></div>
+</body>
+</html>
+
