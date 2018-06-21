@@ -6,12 +6,12 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
 import java.util.*
 
 @RunWith(SpringRunner::class)
-@DataJpaTest
+@SpringBootTest
 class CategoryRepositoryIT {
     @Autowired
     lateinit var categoryRepository: CategoryRepository
@@ -21,8 +21,15 @@ class CategoryRepositoryIT {
     }
 
     @Test
-    fun findByName(){
+    fun findByName_DataSQL(){
         val category : Optional<Category> = categoryRepository.findByName("vegetables")
         Assert.assertEquals("vegetables", category.get().name)
     }
+
+    @Test
+    fun findByName_Bootstrap(){
+        val category : Optional<Category> = categoryRepository.findByName("fruits")
+        Assert.assertEquals("fruits", category.get().name)
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.technologygardens.pickyourown.model
 
+import com.technologygardens.pickyourown.model.elements.Site
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import javax.persistence.*
@@ -13,10 +14,23 @@ data class Farm(
         //todo add logo of the farm
         //todo add images of the farm
         @Lob
-        var description: String = "",
-        @Embedded
-        var site: Site = Site()
+        var description: String = ""
 ) {
+    constructor(id: Long,
+                name: String,
+                description: String,
+                site: Site = Site()) : this(id, name, description) {
+        this.site = site
+    }
+
+    @OneToOne(cascade = arrayOf(CascadeType.ALL))
+    var site: Site = Site()
+        set (value) {
+            field = value
+            if (field.farm != this)
+                field.farm = this
+        }
+
     @ManyToMany(mappedBy = "farms")
     private var farmers: MutableSet<Farmer> = HashSet<Farmer>()
 
@@ -60,23 +74,8 @@ data class Farm(
         }
     }
 
-    @Embeddable
-    data class Site(
-            var address: String = "",
-            var city: String = "",
-            var stateProvince: String = "",
-            var country: String = "",
-            var postalCode: String = "",
-            var directions: String = "",
-            var hours: String = "",
-            var seasonOpens: String = "",
-            var seasonCloses: String = "",
-            var social: String = "",
-            var web: String = ""
-    )
-
     companion object {
-        val logger : Logger = LoggerFactory.getLogger(this::class.java)
+        val logger: Logger = LoggerFactory.getLogger(this::class.java)
     }
 
 }

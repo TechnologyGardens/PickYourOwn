@@ -4,19 +4,31 @@ import com.technologygardens.pickyourown.model.Category
 import com.technologygardens.pickyourown.model.Farm
 import com.technologygardens.pickyourown.model.Farmer
 import com.technologygardens.pickyourown.model.Product
+import com.technologygardens.pickyourown.model.elements.RegularBusinessHours
+import com.technologygardens.pickyourown.model.elements.Site
+import com.technologygardens.pickyourown.model.elements.SpecialEventBusinessHours
 import com.technologygardens.pickyourown.repositories.CategoryRepository
 import com.technologygardens.pickyourown.repositories.FarmRepository
 import com.technologygardens.pickyourown.repositories.FarmerRepository
 import com.technologygardens.pickyourown.repositories.ProductRepository
+import com.technologygardens.pickyourown.repositories.elements.RegularBusinessHoursReposiory
+import com.technologygardens.pickyourown.repositories.elements.SiteRespository
+import com.technologygardens.pickyourown.repositories.elements.SpecialEventBusinessHoursRepository
 import org.springframework.context.ApplicationListener
 import org.springframework.context.event.ContextRefreshedEvent
 import org.springframework.stereotype.Component
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 @Component
 class BootstrapData(private var farmRepository: FarmRepository,
                     private var farmerRepository: FarmerRepository,
                     private var productRepository: ProductRepository,
-                    private var categoryRepository: CategoryRepository) : ApplicationListener<ContextRefreshedEvent> {
+                    private var categoryRepository: CategoryRepository,
+                    private var siteRespository: SiteRespository,
+                    private var regularBusinessHoursReposiory: RegularBusinessHoursReposiory,
+                    private var specialEventBusinessHoursRepository: SpecialEventBusinessHoursRepository
+) : ApplicationListener<ContextRefreshedEvent> {
 
 
     override fun onApplicationEvent(event: ContextRefreshedEvent) {
@@ -24,10 +36,33 @@ class BootstrapData(private var farmRepository: FarmRepository,
     }
 
     fun generateData() {
-        val bunkera = Farm(name = "Bunkera", description = "Bunkera is a small family garden, packed with diverse traditional and exotic produce", site = Farm.Site(address = "55 Bistrishko Shose", city = "Sofia", country = "Bulgaria", postalCode = "1000", directions = "After a sharp turn on the road to Bistrica", hours = "Mon closed, Tue-Fri 8-18h, Sat-Sun 10-20h"))
-        val zahari = Farm(name = "Zahari Stoyanovo", site = Farm.Site(city = "Zahari Stoianovo", country = "Bulgaria"))
+        val bunkera = Farm(name = "Bunkera", description = "Bunkera is a small family garden, packed with diverse traditional and exotic produce")
+        val zahari = Farm(name = "Zahari Stoyanovo")
         farmRepository.save(bunkera)
         farmRepository.save(zahari)
+
+        val regularHours: MutableSet<RegularBusinessHours> = HashSet<RegularBusinessHours>()
+        val weekdays = RegularBusinessHours(daysOfTheWeek = "Tuesday,Wednesday,Thursday,Friday", opensAt = ZonedDateTime.parse("2018-05-01T10:00:00+02:00[Europe/Sofia]"), closesAt = ZonedDateTime.parse("2018-10-01T18:00:00+02:00[Europe/Sofia]"))
+        regularHours.add(weekdays)
+        val weekend = RegularBusinessHours(daysOfTheWeek = "Weekends", opensAt = ZonedDateTime.parse("2018-05-01T10:00:00+02:00[Europe/Sofia]"), closesAt = ZonedDateTime.parse("2018-10-01T20:00:00+02:00[Europe/Sofia]"))
+        regularHours.add(weekend)
+        val eniovDen = SpecialEventBusinessHours(name = "Eniov Den", opensAt = ZonedDateTime.parse("2018-05-21T10:00:00+02:00[Europe/Sofia]"), closesAt = ZonedDateTime.parse("2018-05-21T22:00:00+02:00[Europe/Sofia]"))
+        val specialEvents: MutableSet<SpecialEventBusinessHours> = mutableSetOf(eniovDen)
+        val bunkera_site = Site(address = "55 Bistrishko Shose", city = "Sofia", country = "Bulgaria", postalCode = "1000", directions = "After a sharp turn on the road to Bistrica", regularBusinessHours = regularHours, specialEventBusinessHours = specialEvents)
+        val zahari_site = Site(city = "Zahari Stoianovo", country = "Bulgaria")
+        bunkera.site = bunkera_site
+        zahari.site = zahari_site
+
+        siteRespository.save(bunkera_site)
+        siteRespository.save(zahari_site)
+
+        regularBusinessHoursReposiory.save(weekdays)
+        regularBusinessHoursReposiory.save(weekend)
+        specialEventBusinessHoursRepository.save(eniovDen)
+
+        farmRepository.save(bunkera)
+        farmRepository.save(zahari)
+
 
         val hristo = Farmer(firstName = "Hristo", lastName = " Aladjov", email = "something@technologygardens.com", telephone = "08887777555", web = "technologygardens.com")
         bunkera.addFarmerRelationship(hristo)

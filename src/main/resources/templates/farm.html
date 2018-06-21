@@ -14,7 +14,7 @@
             <p th:text="${farm.site.seasonOpens==farm.site.seasonCloses?'Year-round':'Opens:'+farm.site.seasonOpens+' closes:'+farm.site.seasonCloses}">
                 Opens in May</p>
             <h3>Hours</h3>
-            <div class="hours" th:text="${farm.site.hours}"></div>
+            <div th:each="hours:${farm.site.getBusinessHours()}" ><p class="hours" th:text="${hours}"></p></div>
         </div>
 
         <div class="col">

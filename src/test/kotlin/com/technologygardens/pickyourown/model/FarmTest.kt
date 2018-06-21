@@ -1,15 +1,24 @@
 package com.technologygardens.pickyourown.model
 
+import com.technologygardens.pickyourown.model.elements.RegularBusinessHours
+import com.technologygardens.pickyourown.model.elements.Site
 import org.junit.Before
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class FarmTest {
     val FARM_TEST_ID = 1L
     val FARM_TEST_NAME = "Product One"
     val FARM_TEST_DESCRIPTION = "Farm Description which is longer than 256 symbols. It does not contain any further information besides that: Farm Description which is longer than 256 symbols"
-    val FARM_TEST_SITE = Farm.Site(address = "1 Some street", city = "Sofia", stateProvince = "Sofia District", country = "Bulgaria", postalCode = "1000", directions = "trun left four times", hours = "M-F 8-18, S 10-14", seasonOpens = "May 1", seasonCloses = "Oct 1")
+    val FARM_TEST_BUSINESS_HOURS = mutableSetOf<RegularBusinessHours>(
+            RegularBusinessHours(1001L,"weekdays", ZonedDateTime.parse("2018-05-01T10:00:00.0+02:00[Europe/Sofia]"), ZonedDateTime.parse("2018-05-01T10:00:00+02:00[Europe/Sofia]")),
+            RegularBusinessHours(1002L,"weekend", ZonedDateTime.parse("2018-05-01T10:00:00.0+02:00[Europe/Sofia]"), ZonedDateTime.parse("2018-05-01T14:00:00+02:00[Europe/Sofia]")))
+
+    val FARM_TEST_SITE = Site(1003L,address = "1 Some street", city = "Sofia", stateProvince = "Sofia District", country = "Bulgaria", postalCode = "1000", directions = "trun left four times", regularBusinessHours = FARM_TEST_BUSINESS_HOURS, seasonOpens = "May 1", seasonCloses = "Oct 1")
 
     lateinit var farmer1: Farmer
     lateinit var farmer2: Farmer
@@ -182,7 +191,7 @@ class FarmTest {
 
     @Test
     fun setSite() {
-        val testSite = Farm.Site(address = "new address")
+        val testSite = Site(address = "new address")
         farm.site = testSite
         assertEquals(testSite, farm.site)
     }

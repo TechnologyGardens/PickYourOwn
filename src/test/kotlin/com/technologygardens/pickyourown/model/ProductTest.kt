@@ -1,5 +1,6 @@
 package com.technologygardens.pickyourown.model
 
+import com.technologygardens.pickyourown.model.elements.Site
 import org.junit.Before
 import org.junit.Test
 
@@ -19,8 +20,8 @@ class ProductTest {
         product = Product(PRODUCT_TEST_ID, PRODUCT_TEST_NAME)
         category1 = Category(2L, "Category 1")
         category2 = Category(3L, name = "Category 2")
-        farm1 = Farm(4L, description = "The biggest", name = "Farm 1", site = Farm.Site())
-        farm2 = Farm(5L, description = "Organic", name = "Farm 2", site = Farm.Site())
+        farm1 = Farm(4L, description = "The biggest", name = "Farm 1", site = Site())
+        farm2 = Farm(5L, description = "Organic", name = "Farm 2", site = Site())
     }
 
     @Test

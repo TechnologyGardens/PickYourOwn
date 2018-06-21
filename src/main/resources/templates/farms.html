@@ -28,7 +28,7 @@
                         <span class="address" th:text="${farm.site.address}"></span><br>
                         <span class="address"
                               th:text="${farm.site.city+' '+farm.site.postalCode+','+farm.site.country}"></span><br>
-                        <br><span class="hours" th:text="${farm.site.hours}"></span>
+                        <div th:each="hours:${farm.site.getBusinessHours()}" ><p class="hours" th:text="${hours}"></p></div>
                     </div>
                 </div>
             </div>
