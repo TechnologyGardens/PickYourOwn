@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head(pageTitle=${'Pick Your Own:'+product.name})"></head>
+<body>
+<div th:replace="fragments/navigation(selectedPage='Product')"></div>
+<!--/*@thymesVar id="product" type="com.technologygardens.pickyourown.model.Product"*/-->
+<div class="container">
+    <div class="row">
+
+        <div class="col">
+            <img style="height: 300px; padding:0;"
+                 src="https://cdn.vox-cdn.com/thumbor/Sdt-WzPGHotCu6RSe0WyFN0LUaM=/0x0:1920x1280/2120x1413/filters:focal(807x487:1113x793):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/57340051/apples_2811968_1920.0.jpg">
+        </div>
+
+        <div class="col">
+            <h2 class="resultTitle" th:text="${product.getName()}">Product Name</h2>
+        </div>
+        <div class="col">
+        <a th:each="category, iterStat:${product.getCategories()}" href="#"
+           th:href="@{'/v1/categories/'+${category.id}}"
+           th:text="!${iterStat.last} ? ${category.name} + ',': ${category.name}">Farmer</a>
+        </div>
+    </div>
+
+    <h2 class="resultTitle">Farms:</h2>
+
+    <div class="row mb-4 border" th:each="farm:${product.getFarms()}">
+        <!--/*@thymesVar id="farm" type="com.technologygardens.pickyourown.model.Farm"*/-->
+        <div class=" col-sm-4 m-0 p-0">
+            <a href="#" th:href="@{'/v1/farms/'+${farm.id}}"><img style="height: 200px; padding:0;margin:0"
+                                                                  src="http://greybrucebusinessjournal.ca/wp-content/uploads/2014/10/farm-2.jpg"></a>
+        </div>
+        <div class="col-sm-5 ml-0">
+            <a href="#" th:href="@{'/v1/farms/'+${farm.id}}"><h3 class="resultTitle" th:text="${farm.name}">
+                Farm Name</h3></a>
+            <p th:text="${farm.description}">It is small family farm</p>
+            <b>Products:</b>
+            <span th:each="product, iterStat:${farm.getProducts()}">
+                                <a th:text="!${iterStat.last} ? ${product.name} + ',': ${product.name}">Farmer</a>
+                            </span><br>
+        </div>
+        <div class="col-sm-3 mt-2 mb-2 border-left">
+            <span class="address" th:text="${farm.site.address}"></span><br>
+            <span class="address"
+                  th:text="${farm.site.city+' '+farm.site.postalCode+','+farm.site.country}"></span><br>
+            <div th:each="hours:${farm.site.getBusinessHours()}" ><p class="hours" th:text="${hours}"></p></div>
+        </div>
+    </div>
+</div>
+</div> <!-- /container -->
+
+<div th:replace="fragments/footer"></div>
+</body>
+</html>
+

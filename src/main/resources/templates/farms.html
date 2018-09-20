@@ -12,8 +12,11 @@
                 <div class="row mb-4 border" th:each="farm:${farms}">
                     <!--/*@thymesVar id="farm" type="com.technologygardens.pickyourown.model.Farm"*/-->
                     <div class=" col-sm-4 m-0 p-0">
-                        <a href="#" th:href="@{'/v1/farms/'+${farm.id}}"><img style="height: 200px; padding:0;margin:0"
-                                                                             src="http://greybrucebusinessjournal.ca/wp-content/uploads/2014/10/farm-2.jpg"></a>
+                        <a href="#" th:href="@{'/v1/farms/'+${farm.id}}">
+                            <img style="height: 200px; padding:0;margin:0"
+                                 src="http://greybrucebusinessjournal.ca/wp-content/uploads/2014/10/farm-2.jpg"
+                                 th:src="@{'/v1/farms/' + ${farm.id} + '/farmimage'}">
+                        </a>
                     </div>
                     <div class="col-sm-5 ml-0">
                         <a href="#" th:href="@{'/v1/farms/'+${farm.id}}"><h3 class="resultTitle" th:text="${farm.name}">
@@ -21,7 +24,7 @@
                         <p th:text="${farm.description}">It is small family farm</p>
                         <b>Products:</b>
                         <span th:each="product, iterStat:${farm.getProducts()}">
-                                <a th:text="!${iterStat.last} ? ${product.name} + ',': ${product.name}">Farmer</a>
+                                <a th:text="!${iterStat.last} ? ${product.name} + ${priceService.getFormattedBasePrice(farm,product)}+',': ${product.name}+${priceService.getFormattedBasePrice(farm,product)}">Farmer</a>
                             </span><br>
                     </div>
                     <div class="col-sm-3 mt-2 mb-2 border-left">

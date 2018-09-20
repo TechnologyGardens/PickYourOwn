@@ -2,15 +2,11 @@ package com.technologygardens.pickyourown.model.elements
 
 import com.technologygardens.pickyourown.utils.minuteFmt
 import com.technologygardens.pickyourown.utils.monthFmt
-import java.time.Month
 import java.time.ZonedDateTime
-import java.time.format.TextStyle
-import java.util.*
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
-import kotlin.math.min
 
 @Entity
 data class SpecialEventBusinessHours(

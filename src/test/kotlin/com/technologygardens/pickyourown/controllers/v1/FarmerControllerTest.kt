@@ -1,5 +1,6 @@
 package com.technologygardens.pickyourown.controllers.v1
 
+import com.technologygardens.pickyourown.exceptions.NotFoundException
 import com.technologygardens.pickyourown.model.Farmer
 import com.technologygardens.pickyourown.services.FarmerService
 import org.junit.Before
@@ -8,6 +9,7 @@ import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
+import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
@@ -64,4 +66,70 @@ class FarmererControllerTest {
                 .andExpect(MockMvcResultMatchers.model().attributeExists("farmer"))
         Mockito.verify(farmerService, Mockito.times(1)).getFarmerById(ArgumentMatchers.eq(1L))
     }
+
+    @Test
+    fun getFarmById_NotFound(){
+        Mockito.`when`(farmerService.getFarmerById(ArgumentMatchers.anyLong())).thenThrow(NotFoundException::class.java)
+
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/farmers/1"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound)
+                .andExpect(MockMvcResultMatchers.view().name("404Error"))
+
+    }
+
+    @Test
+    fun getFarmById_BadRequest(){
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/farmers/abcd"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest)
+                .andExpect(MockMvcResultMatchers.view().name("400Error"))
+
+    }
+
+    @Test
+    fun newFarmer() {
+        //val farmer = Farmer(3L)
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/farmers/new"))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andExpect(MockMvcResultMatchers.view().name("farmer-edit"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("farmer"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("isNewFarmer"))
+    }
+
+    @Test
+    fun saveFarmer() {
+        val farmer = Farmer(3L, "Bill", "Mollison")
+        //val anyFarmer = ArgumentMatchers.any(Farmer::class.java) // always returns null and can not be used
+        Mockito.`when`(farmerService.save(farmer)).thenReturn(farmer)
+        mockMVC.perform(MockMvcRequestBuilders.post("/v1/farmer/")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("id", "3")
+                .param("firstName", "Bill")
+                .param("lastName", "Mollison"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/v1/farmers/3"))
+        //  Mockito.verify(farmerService, Mockito.times(1)).save(any<Farmer>())
+    }
+
+    @Test
+    fun updateFarmer() {
+        val farmer = Farmer(1L)
+        Mockito.`when`(farmerService.getFarmerById(ArgumentMatchers.anyLong())).thenReturn(farmer)
+
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/farmers/1/update"))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andExpect(MockMvcResultMatchers.view().name("farmer-edit"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("farmer"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("isNewFarmer"))
+        Mockito.verify(farmerService, Mockito.times(1)).getFarmerById(ArgumentMatchers.eq(1L))
+    }
+
+
+    @Test
+    fun deleteById() {
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/farmers/1/delete"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection)
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/v1/farmers/"))
+        Mockito.verify(farmerService, Mockito.times(1)).deleteById(ArgumentMatchers.anyLong())
+    }
+
 }

@@ -21,8 +21,8 @@ class FarmerTest {
     @Before
     fun setUp() {
         farmer = Farmer(id = FARMER_TEST_ID, firstName = FARMER_TEST_FIRST_NAME, lastName = FARMER_TEST_LAST_NAME, email = FARMER_TEST_EMAIL, social = FARMER_TEST_SOCIAL, web = FARMER_TEST_WEB, telephone = FARMER_TEST_TELEPHONE)
-        farm1 = Farm(101L, "Farm 1", "description")
-        farm2 = Farm(102L, "Farm 2", "description")
+        farm1 = Farm(101L, "Farm 1",  "description")
+        farm2 = Farm(102L, "Farm 2",  "description")
     }
 
     @Test
@@ -197,7 +197,7 @@ class FarmerTest {
     }
 
     @Test
-    fun testHashCode_Equality(){
+    fun testHashCode_Equality() {
         val sameFarmer = Farmer(id = FARMER_TEST_ID, firstName = "Same", lastName = "Same")
         assertEquals("if objects are equals, then they should have the same hashcode!", farmer.hashCode(), sameFarmer.hashCode())
     }

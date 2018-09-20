@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head(pageTitle=${'Pick Your Own:'+category.name})"></head>
+<body>
+<div th:replace="fragments/navigation(selectedPage='Category')"></div>
+<!--/*@thymesVar id="category" type="com.technologygardens.pickyourown.model.Farm"*/-->
+<div class="container">
+    <h2 class="resultTitle" th:text="${category.name+':'}">Farm Name</h2>
+    <div class="row">
+        <div class="col">
+            <div class="card-columns">
+                <div th:each="product:${category.getProducts()}" class="card" style="width:300px">
+                    <a href="#" th:href="@{'/v1/products/'+${product.id}}"><img class="card-img-top"
+                         src="https://cdn.vox-cdn.com/thumbor/Sdt-WzPGHotCu6RSe0WyFN0LUaM=/0x0:1920x1280/2120x1413/filters:focal(807x487:1113x793):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/57340051/apples_2811968_1920.0.jpg"
+                                                                                alt="Card image"></a>
+                    <div class="card-body">
+                        <a href="#" th:href="@{'/v1/products/'+${product.id}}"><h3 th:text="${product.name}" class="card-title">Apple</h3></a>
+                        <p class="card-text">Some example text.</p>
+                        <a href="#" th:href="@{'/v1/products/'+${product.id}}" class="btn btn-primary">See Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- /container -->
+
+<div th:replace="fragments/footer"></div>
+</body>
+</html>
+

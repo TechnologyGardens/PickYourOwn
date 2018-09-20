@@ -20,8 +20,8 @@ class ProductTest {
         product = Product(PRODUCT_TEST_ID, PRODUCT_TEST_NAME)
         category1 = Category(2L, "Category 1")
         category2 = Category(3L, name = "Category 2")
-        farm1 = Farm(4L, description = "The biggest", name = "Farm 1", site = Site())
-        farm2 = Farm(5L, description = "Organic", name = "Farm 2", site = Site())
+        farm1 = Farm(4L, name = "Farm 1", image = byteArrayOf(), description = "The biggest", site = Site())
+        farm2 = Farm(5L, name = "Farm 2", image = byteArrayOf(), description = "Organic", site = Site())
     }
 
     @Test

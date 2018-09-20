@@ -1,27 +1,35 @@
 package com.technologygardens.pickyourown.model
 
 import com.technologygardens.pickyourown.model.elements.Site
+import org.hibernate.annotations.Cascade
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import javax.persistence.*
 
 @Entity
-data class Farm(
+open class Farm(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Cascade(org.hibernate.annotations.CascadeType.ALL)
         val id: Long = 0L,
         var name: String = "",
         //todo add logo of the farm
-        //todo add images of the farm
+        @Lob
+        var image: ByteArray = byteArrayOf(),
         @Lob
         var description: String = ""
 ) {
     constructor(id: Long,
                 name: String,
+                image: ByteArray,
                 description: String,
-                site: Site = Site()) : this(id, name, description) {
+                site: Site = Site()) : this(id, name, image, description) {
         this.site = site
     }
+
+    constructor(id: Long,
+                name: String,
+                description: String) : this(id, name, byteArrayOf(), description)
 
     @OneToOne(cascade = arrayOf(CascadeType.ALL))
     var site: Site = Site()
@@ -31,10 +39,10 @@ data class Farm(
                 field.farm = this
         }
 
-    @ManyToMany(mappedBy = "farms")
+    @ManyToMany(mappedBy = "farms", cascade = arrayOf(CascadeType.ALL))
     private var farmers: MutableSet<Farmer> = HashSet<Farmer>()
 
-    @ManyToMany(mappedBy = "farms")
+    @ManyToMany(mappedBy = "farms", cascade = arrayOf(CascadeType.ALL))
     private var products: MutableSet<Product> = HashSet<Product>()
 
     fun addFarmerRelationship(farmer: Farmer) {

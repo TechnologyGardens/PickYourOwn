@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head(pageTitle=${'Upload image for:'+farm.getName()})"></head>
+<body>
+<div th:replace="fragments/navigation(selectedPage='Farm')"></div>
+<div th:replace="fragments/upload_image(formAction='/v1/farms/'+${farm.getId()}+'/image')"></div>
+<div th:replace="fragments/footer"></div>
+</body>
+</html>
+

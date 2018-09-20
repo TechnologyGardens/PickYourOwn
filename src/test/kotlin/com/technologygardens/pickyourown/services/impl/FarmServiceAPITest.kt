@@ -1,6 +1,7 @@
 package com.technologygardens.pickyourown.services.impl
 
 import com.nhaarman.mockito_kotlin.verify
+import com.technologygardens.pickyourown.exceptions.NotFoundException
 import com.technologygardens.pickyourown.model.Farm
 import com.technologygardens.pickyourown.repositories.FarmRepository
 import com.technologygardens.pickyourown.services.FarmService
@@ -31,8 +32,8 @@ class FarmServiceAPITest {
     @Test
     fun getFarms() {
         val farms = HashSet<Farm>()
-        farms.add(Farm(1L,"Farm 1","Permaculture"))
-        farms.add(Farm(2L,"Farm 2","Monoculture"))
+        farms.add(Farm(1L, "Farm 1", description = "Permaculture"))
+        farms.add(Farm(2L, "Farm 2", description = "Monoculture"))
 
         Mockito.`when`(farmRepository.findAll()).thenReturn(farms)
 
@@ -50,8 +51,40 @@ class FarmServiceAPITest {
         Mockito.`when`(farmRepository.findById(ArgumentMatchers.anyLong())).thenReturn(farmOpt)
         val result = farmService.getFarmById(1L)
 
-        assertNotNull("Farm not found by the service!",result)
-        assertEquals("Wrong Farm returned!",result,farm)
+        assertNotNull("Farm not found by the service!", result)
+        assertEquals("Wrong Farm returned!", result, farm)
         verify(farmRepository, Mockito.times(1)).findById(ArgumentMatchers.anyLong())
     }
+
+    @Test(expected = NotFoundException::class)
+    fun getFarmById_NotFound() {
+        Mockito.`when`(farmService.getFarmById(ArgumentMatchers.anyLong())).thenReturn(null)
+        farmService.getFarmById(1L)
+    }
+
+    @Test
+    fun save() {
+        val farm = Farm(1L, "Bunkera")
+
+        Mockito.`when`(farmRepository.save(ArgumentMatchers.any(Farm::class.java))).thenReturn(farm)
+        val result = farmService.save(farm)
+
+        assertNotNull("Farm not found by the service!", result)
+        assertEquals("Wrong Farm returned!", result, farm)
+        verify(farmRepository, Mockito.times(1)).save(ArgumentMatchers.any(Farm::class.java))
+    }
+
+    @Test
+    fun deleteById() {
+        val id = 1L
+        farmService.deleteById(id)
+        verify(farmRepository, Mockito.times(1)).deleteById(ArgumentMatchers.anyLong())
+    }
+
+    @Test(expected = NotFoundException::class)
+    fun deleteById_NotFound() {
+        Mockito.`when`(farmService.deleteById(ArgumentMatchers.anyLong())).thenThrow(NotFoundException::class.java)
+        farmService.deleteById(-1L)
+    }
+
 }

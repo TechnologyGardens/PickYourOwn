@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head(pageTitle='404 ${context} Not Found')"></head>
+
+<body>
+<div th:replace="fragments/navigation(selectedPage='${context}')"></div>
+<h1 th:text="${'404 '+ context+ ' Not Found'}">404 Not Found</h1>
+<p th:text="${exception.getMessage()}"></p>
+</body>
+</html>

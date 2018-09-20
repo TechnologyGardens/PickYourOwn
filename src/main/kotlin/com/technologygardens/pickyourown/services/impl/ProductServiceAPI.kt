@@ -1,9 +1,11 @@
 package com.technologygardens.pickyourown.services.impl
 
+import com.technologygardens.pickyourown.exceptions.NotFoundException
 import com.technologygardens.pickyourown.model.Product
 import com.technologygardens.pickyourown.repositories.ProductRepository
 import com.technologygardens.pickyourown.services.ProductService
-import javassist.NotFoundException
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -19,4 +21,23 @@ class ProductServiceAPI(private val productRepository: ProductRepository) : Prod
             throw NotFoundException("Product with Id=${id} not found!")
         return productOpt.get()
     }
+
+    override fun save(product: Product): Product {
+        logger.debug("Save product ${product.name} ($product)")
+        return this.productRepository.save(product)
+    }
+
+    override fun deleteById(id: Long) {
+        FarmServiceAPI.logger.debug("Delete product ${id}")
+        try {
+            this.productRepository.deleteById(id)
+        } catch (e: Exception) {
+            throw NotFoundException("Product with Id=${id} not found! Can not delete non existing product")
+        }
+    }
+
+    companion object {
+        val logger: Logger = LoggerFactory.getLogger(this::class.java)
+    }
+
 }

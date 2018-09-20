@@ -28,7 +28,7 @@ class SiteTest {
     @Before
     fun setUp() {
         site = Site(SITE_TEST_ID, SITE_TEST_ADDRESS, SITE_TEST_CITY, SITE_TEST_STATE_PROVINCE, SITE_TEST_COUNTRY, SITE_TEST_POSTAL_CODE, SITE_TEST_DIRECTIONS, SITE_TEST_REGULAR_BUSINESS_HOURS, SITE_TEST_SPECIAL_EVENT_BUSINES_HOURS, SITE_TEST_SEASON_OPENS, SITE_TEST_SEASON_CLOSES, SITE_TEST_SOCIAL, SITE_TEST_WEB)
-        farm = Farm(101L, "Farm 1", "description", site)
+        farm = Farm(101L, "Farm 1",image = byteArrayOf(), description = "description", site = site)
     }
 
     @Test
@@ -196,7 +196,7 @@ class SiteTest {
 
     @Test
     fun setFarm() {
-        val testFarm = Farm(111L,"Test Farm","the newest on the block")
+        val testFarm = Farm(111L,"Test Farm",description = "the newest on the block")
         site.farm= testFarm
         assertEquals(testFarm, site.farm)
     }

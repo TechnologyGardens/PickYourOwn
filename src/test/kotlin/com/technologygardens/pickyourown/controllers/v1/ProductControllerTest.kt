@@ -1,14 +1,17 @@
 package com.technologygardens.pickyourown.controllers.v1
 
+import com.technologygardens.pickyourown.exceptions.NotFoundException
 import com.technologygardens.pickyourown.model.Product
 import com.technologygardens.pickyourown.services.ProductService
 import org.junit.Test
 
 import org.junit.Before
 import org.mockito.ArgumentMatchers
+import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
+import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
@@ -41,8 +44,8 @@ class ProductControllerTest {
     @Test
     fun getProducts() {
         val products = HashSet<Product>()
-        products.add(Product(101L,"Apple"))
-        products.add(Product(202L,"Orange"))
+        products.add(Product(101L, "Apple"))
+        products.add(Product(202L, "Orange"))
 
         Mockito.`when`(productService.getProducts()).thenReturn(products)
 
@@ -56,7 +59,7 @@ class ProductControllerTest {
 
     @Test
     fun getProductById() {
-        val product  = Product(1L)
+        val product = Product(1L)
         Mockito.`when`(productService.getProductById(ArgumentMatchers.anyLong())).thenReturn(product)
 
         mockMVC.perform(MockMvcRequestBuilders.get("/v1/products/1"))
@@ -64,5 +67,68 @@ class ProductControllerTest {
                 .andExpect(MockMvcResultMatchers.view().name("product"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("product"))
         Mockito.verify(productService, Mockito.times(1)).getProductById(ArgumentMatchers.eq(1L))
+    }
+
+    @Test
+    fun getFarmById_NotFound() {
+        Mockito.`when`(productService.getProductById(anyLong())).thenThrow(NotFoundException::class.java)
+
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/products/1"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound)
+                .andExpect(MockMvcResultMatchers.view().name("404Error"))
+
+    }
+
+    @Test
+    fun getFarmById_BadRequest() {
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/products/abcd"))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest)
+                .andExpect(MockMvcResultMatchers.view().name("400Error"))
+    }
+
+
+    @Test
+    fun newProduct() {
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/products/new"))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andExpect(MockMvcResultMatchers.view().name("product-edit"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("product"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("isNewProduct"))
+    }
+
+    @Test
+    fun saveProduct() {
+        val product = Product(3L, "Product 1")
+        //val anyProduct = ArgumentMatchers.any(Product::class.java) // always returns null and can not be used
+        Mockito.`when`(productService.save(product)).thenReturn(product)
+        mockMVC.perform(MockMvcRequestBuilders.post("/v1/product/")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("id", "3")
+                .param("name", "Product 1"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/v1/products/3"))
+        //  Mockito.verify(productService, Mockito.times(1)).save(any<Product>())
+    }
+
+    @Test
+    fun updateProduct() {
+        val product = Product(1L)
+        Mockito.`when`(productService.getProductById(ArgumentMatchers.anyLong())).thenReturn(product)
+
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/products/1/update"))
+                .andExpect(MockMvcResultMatchers.status().isOk)
+                .andExpect(MockMvcResultMatchers.view().name("product-edit"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("product"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("isNewProduct"))
+        Mockito.verify(productService, Mockito.times(1)).getProductById(ArgumentMatchers.eq(1L))
+    }
+
+
+    @Test
+    fun deleteById() {
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/products/1/delete"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection)
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/v1/products/"))
+        Mockito.verify(productService, Mockito.times(1)).deleteById(anyLong())
     }
 }

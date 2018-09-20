@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head(pageTitle='404 ${context} Not Found')"></head>
+
+<body>
+<div th:replace="fragments/navigation(selectedPage='${context}')"></div>
+<h1 th:text="${'400 Bad '+ context+ ' Request'}">400 Bad Request</h1>
+<p th:text="${'Expecting '+ #strings.toLowerCase(context)+ ' identifier as a number but string found. '+exception.getMessage()}"></p>
+</body>
+</html>

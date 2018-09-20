@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="upload_image(formAction)" class="upload_image">
+<form  name="uploadForm" th:action="@{${formAction}}" method="post" enctype="multipart/form-data" >
+    <label class="control-label">Select File</label>
+    <input id="imagefile" name="imagefile" type="file" class="file">
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+</div>
+</html>

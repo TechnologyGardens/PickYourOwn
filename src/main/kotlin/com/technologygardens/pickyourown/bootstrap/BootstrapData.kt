@@ -1,30 +1,25 @@
 package com.technologygardens.pickyourown.bootstrap
 
-import com.technologygardens.pickyourown.model.Category
-import com.technologygardens.pickyourown.model.Farm
-import com.technologygardens.pickyourown.model.Farmer
-import com.technologygardens.pickyourown.model.Product
+import com.technologygardens.pickyourown.model.*
 import com.technologygardens.pickyourown.model.elements.RegularBusinessHours
 import com.technologygardens.pickyourown.model.elements.Site
 import com.technologygardens.pickyourown.model.elements.SpecialEventBusinessHours
-import com.technologygardens.pickyourown.repositories.CategoryRepository
-import com.technologygardens.pickyourown.repositories.FarmRepository
-import com.technologygardens.pickyourown.repositories.FarmerRepository
-import com.technologygardens.pickyourown.repositories.ProductRepository
+import com.technologygardens.pickyourown.repositories.*
 import com.technologygardens.pickyourown.repositories.elements.RegularBusinessHoursReposiory
 import com.technologygardens.pickyourown.repositories.elements.SiteRespository
 import com.technologygardens.pickyourown.repositories.elements.SpecialEventBusinessHoursRepository
 import org.springframework.context.ApplicationListener
 import org.springframework.context.event.ContextRefreshedEvent
 import org.springframework.stereotype.Component
+import java.math.BigDecimal
 import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
 
 @Component
 class BootstrapData(private var farmRepository: FarmRepository,
                     private var farmerRepository: FarmerRepository,
                     private var productRepository: ProductRepository,
                     private var categoryRepository: CategoryRepository,
+                    private var priceRepository: PriceRepository,
                     private var siteRespository: SiteRespository,
                     private var regularBusinessHoursReposiory: RegularBusinessHoursReposiory,
                     private var specialEventBusinessHoursRepository: SpecialEventBusinessHoursRepository
@@ -100,5 +95,16 @@ class BootstrapData(private var farmRepository: FarmRepository,
         productRepository.save(strawberries)
         productRepository.save(apples)
 
+        val bunkera_price_1_5kg = Price(farm = bunkera, product = apples, value = BigDecimal.valueOf(150,2), minQuantity = 0, maxQuantity = 5)
+        val bunkera_price_gt5kg = Price(farm = bunkera, product = apples, value = BigDecimal.valueOf(120,2), minQuantity = 5)
+        val bunkera_price = Price(farm = bunkera, product = strawberries, value = BigDecimal.valueOf(200,2), minQuantity = 5)
+        priceRepository.save(bunkera_price_1_5kg)
+        priceRepository.save(bunkera_price_gt5kg)
+        priceRepository.save(bunkera_price)
+
+        val zahari_price_1_5kg = Price(farm = zahari, product = apples, value = BigDecimal.valueOf(170,2), minQuantity = 0, maxQuantity = 5)
+        val zahari_price_gt5kg = Price(farm = zahari, product = apples, value = BigDecimal.valueOf(150,2), minQuantity = 5)
+        priceRepository.save(zahari_price_1_5kg)
+        priceRepository.save(zahari_price_gt5kg)
     }
 }
