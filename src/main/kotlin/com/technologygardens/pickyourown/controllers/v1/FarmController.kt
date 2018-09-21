@@ -7,16 +7,18 @@ import com.technologygardens.pickyourown.services.PriceService
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.ModelAndView
+import javax.validation.Valid
 
 @Controller
-class FarmController(private val farmService: FarmService, private  val priceService: PriceService) {
+class FarmController(private val farmService: FarmService, private val priceService: PriceService) {
 
     @GetMapping("/v1/farms")
     fun getFarms(model: Model): String {
         model.addAttribute("farms", farmService.getFarms())
-        model.addAttribute("priceService",priceService)
+        model.addAttribute("priceService", priceService)
         return "farms"
     }
 
@@ -29,13 +31,18 @@ class FarmController(private val farmService: FarmService, private  val priceSer
     @GetMapping("/v1/farms/new")
     fun newFarm(model: Model): String {
         model.addAttribute("farm", Farm())
-        model.addAttribute("isNewFarm", true)
+        model.addAttribute("isNewFarm",true)
         return "farm-edit"
     }
 
 
     @PostMapping("/v1/farm/")
-    fun saveFarm(@ModelAttribute("farm") farm: Farm): String {
+    fun saveFarm(@Valid @ModelAttribute("farm") farm: Farm, bindingResult: BindingResult): String {
+        if (bindingResult.hasErrors()) {
+            for (error in bindingResult.allErrors)
+                System.err.println(error.toString())
+            return "farm-edit"
+        }
         println("saveFarm:$farm")
         farmService.save(farm)
         return "redirect:/v1/farms/${farm.id}"
@@ -56,19 +63,19 @@ class FarmController(private val farmService: FarmService, private  val priceSer
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException::class)
-    fun identifierNotFound(exception: NotFoundException): ModelAndView{
+    fun identifierNotFound(exception: NotFoundException): ModelAndView {
         val modelAndView = ModelAndView("404Error")
         modelAndView.addObject("context", "Farm")
         modelAndView.addObject("exception", exception)
-        return  modelAndView
+        return modelAndView
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NumberFormatException::class)
-    fun badRequest(exception: NumberFormatException): ModelAndView{
+    fun badRequest(exception: NumberFormatException): ModelAndView {
         val modelAndView = ModelAndView("400Error")
         modelAndView.addObject("context", "Farm")
         modelAndView.addObject("exception", exception)
-        return  modelAndView
+        return modelAndView
     }
 }

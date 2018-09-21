@@ -5,6 +5,9 @@ import org.hibernate.annotations.Cascade
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import javax.persistence.*
+import javax.validation.Valid
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.Size
 
 @Entity
 open class Farm(
@@ -12,11 +15,13 @@ open class Farm(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Cascade(org.hibernate.annotations.CascadeType.ALL)
         val id: Long = 0L,
+        @field:Size(min=1, max = 255)
         var name: String = "",
         //todo add logo of the farm
         @Lob
         var image: ByteArray = byteArrayOf(),
         @Lob
+        @field:NotBlank
         var description: String = ""
 ) {
     constructor(id: Long,
@@ -32,6 +37,7 @@ open class Farm(
                 description: String) : this(id, name, byteArrayOf(), description)
 
     @OneToOne(cascade = arrayOf(CascadeType.ALL))
+    @Valid
     var site: Site = Site()
         set (value) {
             field = value

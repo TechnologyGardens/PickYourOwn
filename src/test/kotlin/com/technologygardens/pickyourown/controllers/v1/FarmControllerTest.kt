@@ -101,7 +101,6 @@ class FarmControllerTest {
     @Test
     fun saveFarm() {
         val farm = Farm(3L, "Gecori", byteArrayOf(),"description of the farm")
-        //val anyFarm = ArgumentMatchers.any(Farm::class.java) // always returns null and can not be used
         Mockito.`when`(farmService.save(farm)).thenReturn(farm)
         mockMVC.perform(MockMvcRequestBuilders.post("/v1/farm/")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -110,7 +109,21 @@ class FarmControllerTest {
                 .param("description", "description of the farm"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/v1/farms/3"))
-        //  Mockito.verify(farmService, Mockito.times(1)).save(any<Farm>())
+        Mockito.verify(farmService, Mockito.times(1)).save(anyFarm())
+    }
+
+    @Test
+    fun saveFarm_ValidationError() {
+        mockMVC.perform(MockMvcRequestBuilders.post("/v1/farm/")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("id", "3")
+                .param("name", "")
+                .param("description", ""))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("farm-edit"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("farm"))
+        Mockito.verify(farmService, Mockito.times(0)).save(anyFarm())
+
     }
 
     @Test
@@ -134,6 +147,6 @@ class FarmControllerTest {
         Mockito.verify(farmService, Mockito.times(1)).getFarmById(ArgumentMatchers.eq(1L))
     }
 
-
+    fun anyFarm() = Mockito.any(Farm::class.java) ?: Farm()
 
 }

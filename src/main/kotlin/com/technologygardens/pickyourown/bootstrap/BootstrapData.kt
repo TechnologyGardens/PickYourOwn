@@ -31,11 +31,6 @@ class BootstrapData(private var farmRepository: FarmRepository,
     }
 
     fun generateData() {
-        val bunkera = Farm(name = "Bunkera", description = "Bunkera is a small family garden, packed with diverse traditional and exotic produce")
-        val zahari = Farm(name = "Zahari Stoyanovo")
-        farmRepository.save(bunkera)
-        farmRepository.save(zahari)
-
         val regularHours: MutableSet<RegularBusinessHours> = HashSet<RegularBusinessHours>()
         val weekdays = RegularBusinessHours(daysOfTheWeek = "Tuesday,Wednesday,Thursday,Friday", opensAt = ZonedDateTime.parse("2018-05-01T10:00:00+02:00[Europe/Sofia]"), closesAt = ZonedDateTime.parse("2018-10-01T18:00:00+02:00[Europe/Sofia]"))
         regularHours.add(weekdays)
@@ -44,9 +39,13 @@ class BootstrapData(private var farmRepository: FarmRepository,
         val eniovDen = SpecialEventBusinessHours(name = "Eniov Den", opensAt = ZonedDateTime.parse("2018-05-21T10:00:00+02:00[Europe/Sofia]"), closesAt = ZonedDateTime.parse("2018-05-21T22:00:00+02:00[Europe/Sofia]"))
         val specialEvents: MutableSet<SpecialEventBusinessHours> = mutableSetOf(eniovDen)
         val bunkera_site = Site(address = "55 Bistrishko Shose", city = "Sofia", country = "Bulgaria", postalCode = "1000", directions = "After a sharp turn on the road to Bistrica", regularBusinessHours = regularHours, specialEventBusinessHours = specialEvents)
-        val zahari_site = Site(city = "Zahari Stoianovo", country = "Bulgaria")
-        bunkera.site = bunkera_site
-        zahari.site = zahari_site
+        val zahari_site = Site(city = "Zahari Stoianovo", country = "Bulgaria", directions = "Toward the end of the village")
+
+        val bunkera = Farm(0L, name = "Bunkera", image = byteArrayOf(), description = "Bunkera is a small family garden, packed with diverse traditional and exotic produce", site=bunkera_site)
+        val zahari = Farm(0L, name = "Zahari Stoyanovo", image = byteArrayOf(), description = "Farm close to the sea",site=zahari_site)
+        farmRepository.save(bunkera)
+        farmRepository.save(zahari)
+
 
         siteRespository.save(bunkera_site)
         siteRespository.save(zahari_site)

@@ -1,19 +1,28 @@
 package com.technologygardens.pickyourown.model.elements
 
 import com.technologygardens.pickyourown.model.Farm
+import org.hibernate.validator.constraints.URL
 import javax.persistence.*
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.Size
 
 @Entity
 data class Site(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long = 0L,
+        @field:Size(min=0, max = 255)
         var address: String = "",
+        @field:Size(min=0, max = 255)
         var city: String = "",
+        @field:Size(min=0, max = 255)
         var stateProvince: String = "",
+        @field:Size(min=0, max = 255)
         var country: String = "",
+        @field:Size(min=0, max = 255)
         var postalCode: String = "",
-        var directions: String = "",
+        @field:NotBlank
+        var directions: String = "Please provide directions to your farm site",
         @OneToMany(cascade = arrayOf(CascadeType.ALL))
         @JoinColumn(name = "regular_business_hours_id")
         var regularBusinessHours: MutableSet<RegularBusinessHours> = mutableSetOf<RegularBusinessHours>(),
@@ -22,7 +31,9 @@ data class Site(
         var specialEventBusinessHours: MutableSet<SpecialEventBusinessHours> = mutableSetOf<SpecialEventBusinessHours>(),
         var seasonOpens: String = "",
         var seasonCloses: String = "",
+        @field:URL
         var social: String = "",
+        @field:URL
         var web: String = ""
 
 ) {
