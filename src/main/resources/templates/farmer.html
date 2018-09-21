@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <h2 class="resultTitle">Farms:</h2>
+    <h2 class="resultTitle" th:text="#{captions.farms}">Farms:</h2>
 
     <div class="row mb-4 border" th:each="farm:${farmer.getFarms()}">
         <!--/*@thymesVar id="farm" type="com.technologygardens.pickyourown.model.Farm"*/-->

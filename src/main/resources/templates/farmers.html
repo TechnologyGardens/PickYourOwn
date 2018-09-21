@@ -3,18 +3,20 @@
 <head th:replace="fragments/head(pageTitle='Farmers')"></head>
 <body>
 <div th:replace="fragments/navigation(selectedPage='Farmers')"></div>
-<h1>Participating Farmers</h1>
+<h1 th:text="#{captions.participatingFarmers}">Participating Farmers</h1>
 
-<table class="Table">
+<table class="table">
     <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Farms</th>
+        <th th:text="#{captions.ID}">Id</th>
+        <th th:text="#{captions.name}">Name</th>
+        <th th:text="#{captions.farms}">Farms</th>
     </tr>
     <tr th:each="farmer:${farmers}">
         <td th:text="${farmer.id}">1</td>
-        <td th:text="${farmer.firstName +' '+ farmer.lastName}">Hristo Aladjov</td>
-        <td th:text="${farmer.getFarms()}">farmers</td>
+        <td><a th:href="@{'/v1/farmers/'+${farmer.id}}" th:text="${farmer.firstName +' '+ farmer.lastName}">Hristo Aladjov</a></td>
+        <td><span th:each="farm, iterStat:${farmer.getFarms()}">
+            <a th:href="@{'/v1/farms/'+${farm.id}}" th:text="!${iterStat.last} ? ${farm.name} +',': ${farm.name} ">Farmer</a>
+        </span></td>
     </tr>
 </table>
 </body>

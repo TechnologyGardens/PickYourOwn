@@ -5,7 +5,7 @@
 <div th:replace="fragments/navigation(selectedPage='Category')"></div>
 <!--/*@thymesVar id="category" type="com.technologygardens.pickyourown.model.Farm"*/-->
 <div class="container">
-    <h2 class="resultTitle" th:text="${category.name+':'}">Farm Name</h2>
+    <h2 class="resultTitle" th:text="${category.name+':'}">Category Name</h2>
     <div class="row">
         <div class="col">
             <div class="card-columns">
@@ -16,7 +16,7 @@
                     <div class="card-body">
                         <a href="#" th:href="@{'/v1/products/'+${product.id}}"><h3 th:text="${product.name}" class="card-title">Apple</h3></a>
                         <p class="card-text">Some example text.</p>
-                        <a href="#" th:href="@{'/v1/products/'+${product.id}}" class="btn btn-primary">See Profile</a>
+                        <a href="#" th:href="@{'/v1/products/'+${product.id}}" class="btn btn-primary" th:text="#{captions.seeProfile}">See Profile</a>
                     </div>
                 </div>
             </div>

@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="upload_image(formAction)" class="upload_image">
 <form  name="uploadForm" th:action="@{${formAction}}" method="post" enctype="multipart/form-data" >
-    <label class="control-label">Select File</label>
+    <label class="control-label" th:text="#{captions.selectFile}">Select File</label>
     <input id="imagefile" name="imagefile" type="file" class="file">
-    <button type="submit" class="btn btn-primary">Upload</button>
+    <button type="submit" class="btn btn-primary" th:text="#{captions.upload}">Upload</button>
 </form>
 </div>
 </html>

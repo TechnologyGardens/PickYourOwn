@@ -3,7 +3,7 @@
 <head th:replace="fragments/head(pageTitle='Farms')"></head>
 <body>
 <div th:replace="fragments/navigation(selectedPage='Farms')"></div>
-<h1>Participating Farms</h1>
+<h1 th:text="#{captions.participatingFarms}">Participating Farms</h1>
 
 <div class="container-fluid">
     <div class="row">
@@ -22,7 +22,7 @@
                         <a href="#" th:href="@{'/v1/farms/'+${farm.id}}"><h3 class="resultTitle" th:text="${farm.name}">
                             Farm Name</h3></a>
                         <p th:text="${farm.description}">It is small family farm</p>
-                        <b>Products:</b>
+                        <b><span th:text="#{captions.products}">Products:</span></b>
                         <span th:each="product, iterStat:${farm.getProducts()}">
                                 <a th:text="!${iterStat.last} ? ${product.name} + ${priceService.getFormattedBasePrice(farm,product)}+',': ${product.name}+${priceService.getFormattedBasePrice(farm,product)}">Farmer</a>
                             </span><br>

@@ -9,21 +9,30 @@
     <form name="farmForm" th:object="${farm}" th:action="@{/v1/farm/}" method="post">
         <div class="row">
             <div class="col">
-                <h2 class="resultTitle">Describe your farm</h2>
+                <h2 class="resultTitle" th:text="#{captions.title}">Describe your farm</h2>
                 <input type="hidden" th:field="*{id}"/>
-                <div class="form-group">
-                    <label>Farm name:</label>
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                    <p th:text="#{captions.formError}">Please correct the errors below!</p>
+                </div>
+                <div th:class="${#fields.hasErrors('name')}?'form-group alert alert-danger':'form-group'">
+                    <label th:text="#{captions.farmName}">Farm name:</label>
                     <input type="text" class="form-control-lg" th:field="*{name}"></input>
+                    <ul class="help-block" th:if="${#fields.hasErrors('name')}">
+                       <li th:each="err: ${#fields.errors('name')}" th:text="${err}">  </li>
+                    </ul>
                 </div>
-                <div class="form-group">
-                    <label>Description:</label>
+                <div th:class="${#fields.hasErrors('description')}?'form-group alert alert-danger':'form-group'">
+                    <label  th:text="#{captions.description}">Description:</label>
                     <textarea class="form-control" rows=10 th:field="*{description}"></textarea>
+                    <ul class="help-block" th:if="${#fields.hasErrors('description')}">
+                        <li th:each="err: ${#fields.errors('description')}" th:text="${err}">  </li>
+                    </ul>
                 </div>
-                <h3>When to visit:</h3>
+                <h3 th:text="#{captions.whenToVisit}" >When to visit:</h3>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="season" id="YearRound" value="Year-round"
                            checked>
-                    <label class="form-check-label" for="YearRound">
+                    <label class="form-check-label" for="YearRound" th:text="#{captions.yearRound}">
                         Year-round
                     </label>
                 </div>
@@ -32,7 +41,7 @@
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="season" id="openBetween"
                                    value="OpenBetween" checked>
-                            <label class="form-check-label" for="openBetween">
+                            <label class="form-check-label" for="openBetween" th:text="#{captions.openBetween}">
                                 Open between:
                             </label>
                         </div>
@@ -67,11 +76,11 @@
                 <img style="height: 400px; padding:0;margin-top:40px"
                      src="http://greybrucebusinessjournal.ca/wp-content/uploads/2014/10/farm-2.jpg">
                 <a class="btn btn-default" href="#"
-                   th:href="@{'/v1/farms/' + ${farm.id} + '/image'}" role="button">Change Image</a>
+                   th:href="@{'/v1/farms/' + ${farm.id} + '/image'}" role="button" th:text="#{captions.changeImage}">Change Image</a>
             </div>
         </div>
 
-        <h2 class="resultTitle">Products:</h2>
+        <h2 class="resultTitle" th:text="#{captions.products}">Products:</h2>
         <div class="row">
             <div class="col">
                 <div class="card-columns">
@@ -91,7 +100,7 @@
                 </div>
             </div>
         </div>
-        <h2 class="resultTitle">How to reach us</h2>
+        <h2 class="resultTitle" th:text="#{captions.howToReachUs}">How to reach us</h2>
         <div class="row">
             <div class="col">
                 <iframe width="100%" height="540" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
@@ -118,32 +127,66 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Address:</label>
-                    <input type="text" class="form-control-lg" th:field="*{site.address}"></input>
+                <div th:class="${#fields.hasErrors('site.address')}?'form-group alert alert-danger':'form-group'">
+                    <label th:text="#{captions.address}">Address:</label>
+                    <input type="text" class="form-control" th:field="*{site.address}"></input>
+                    <ul class="help-block" th:if="${#fields.hasErrors('site.address')}">
+                        <li th:each="err: ${#fields.errors('site.address')}" th:text="${err}">  </li>
+                    </ul>
                 </div>
-                <div class="form-group">
-                    <label>City:</label>
-                    <input type="text" class="form-control-lg" th:field="*{site.city}"></input>
+                <div th:class="${#fields.hasErrors('site.city')}?'form-group alert alert-danger':'form-group'">
+                    <label th:text="#{captions.city}">City:</label>
+                    <input type="text" class="form-control" th:field="*{site.city}"></input>
+                    <ul class="help-block" th:if="${#fields.hasErrors('site.city')}">
+                        <li th:each="err: ${#fields.errors('site.city')}" th:text="${err}">  </li>
+                    </ul>
                 </div>
-                <div class="form-group">
-                    <label>Postal Code:</label>
-                    <input type="text" class="form-control-lg" th:field="*{site.postalCode}"></input>
+                <div th:class="${#fields.hasErrors('site.postalCode')}?'form-group alert alert-danger':'form-group'">
+                    <label th:text="#{captions.postalCode}">Postal Code:</label>
+                    <input type="text" class="form-control" th:field="*{site.postalCode}"></input>
+                    <ul class="help-block" th:if="${#fields.hasErrors('site.postalCode')}">
+                        <li th:each="err: ${#fields.errors('site.postalCode')}" th:text="${err}">  </li>
+                    </ul>
                 </div>
-                <div class="form-group">
-                    <label>Country:</label>
-                    <input type="text" class="form-control-lg" th:field="*{site.country}"></input>
+                <div th:class="${#fields.hasErrors('site.country')}?'form-group alert alert-danger':'form-group'">
+                    <label th:text="#{captions.country}">Country:</label>
+                    <input type="text" class="form-control" th:field="*{site.country}"></input>
+                    <ul class="help-block" th:if="${#fields.hasErrors('site.country')}">
+                        <li th:each="err: ${#fields.errors('site.country')}" th:text="${err}">  </li>
+                    </ul>
                 </div>
-                <div class="form-group">
-                    <label>Directions:</label>
+                <div th:class="${#fields.hasErrors('site.directions')}?'form-group alert alert-danger':'form-group'">
+                    <label th:text="#{captions.directions}">Directions:</label>
                     <textarea class="form-control" rows=10 th:field="*{site.directions}"></textarea>
+                    <ul class="help-block" th:if="${#fields.hasErrors('site.directions')}">
+                        <li th:each="err: ${#fields.errors('site.directions')}" th:text="${err}">  </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <div>
-            <button type="submit" class="btn btn-primary">Create Farm</button>
-            <!--button th:if="${newFarm}" type="reset" class="btn btn-primary">Reset form</--button-->
-            <!--a th:unless="${newFarm}" th:href="@{'/v1/farm/'+${farm.id}}"><button class="btn btn-primary">Cancel edits</button></a-->
+        <h2 class="resultTitle" th:text="#{captions.linksAndSocialMedia}">Links and Social Media</h2>
+        <div class="row">
+            <div class="col">
+                <div th:class="${#fields.hasErrors('site.social')}?'form-group alert alert-danger':'form-group'">
+                    <label th:text="#{captions.socialMediaLinks}">Social Media Links:</label>
+                    <input type="text" class="form-control" th:field="*{site.social}"></input>
+                    <ul class="help-block" th:if="${#fields.hasErrors('site.social')}">
+                        <li th:each="err: ${#fields.errors('site.social')}" th:text="${err}">  </li>
+                    </ul>
+                </div>
+                <div th:class="${#fields.hasErrors('site.web')}?'form-group alert alert-danger':'form-group'">
+                    <label th:text="#{captions.website}">Website:</label>
+                    <input type="text" class="form-control" th:field="*{site.web}"></input>
+                    <ul class="help-block" th:if="${#fields.hasErrors('site.web')}">
+                        <li th:each="err: ${#fields.errors('site.web')}" th:text="${err}">  </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+            <div>
+            <button type="submit" class="btn btn-primary" th:text="${isNewFarm}?#{captions.createFarm}:#{captions.updateFarm}">Create Farm</button>
+            <button th:if="${isNewFarm}" type="reset" class="btn btn-primary" th:text="#{captions.resetForm}">Reset form</button>
+            <!--a th:unless="${isNewFarm}" th:href="@{'/v1/farms/'+${farm.id}}"><button class="btn btn-primary">Cancel edits</button></a-->
         </div>
     </form>
 </div> <!-- /container -->

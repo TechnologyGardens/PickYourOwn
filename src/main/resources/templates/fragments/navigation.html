@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <nav th:fragment="navigation(selectedPage)" class="navbar navbar-expand-lg navbar-light bg-light ">
-    <a class="navbar-brand" href="#">Pick Your Own</a>
+    <a class="navbar-brand" href="/" th:text="#{captions.applicationName}">Pick Your Own</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03"
             aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation" style="">
         <span class="navbar-toggler-icon"></span>
@@ -9,8 +9,8 @@
 
     <div class="collapse navbar-collapse" id="navbarColor03">
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control is-valid mr-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <input class="form-control is-valid mr-sm-2" type="text" placeholder="Search" th:placeholder="#{captions.search}">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" th:text="#{captions.search}">Search</button>
         </form>
     </div>
 </nav>

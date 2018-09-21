@@ -3,20 +3,24 @@
 <head th:replace="fragments/head(pageTitle='Products')"></head>
 <body>
 <div th:replace="fragments/navigation(selectedPage='Products')"></div>
-<h1>Available Products</h1>
+<h1 th:text="#{captions.availableProducts}">Available Products</h1>
 
-<table class="Table">
+<table class="table">
     <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Farms</th>
-        <th>Categories</th>
+        <th th:text="#{captions.ID}">Id</th>
+        <th th:text="#{captions.name}">Name</th>
+        <th th:text="#{captions.farms}">Farms</th>
+        <th th:text="#{captions.categories}" >Categories</th>
     </tr>
     <tr th:each="product:${products}">
         <td th:text="${product.id}">1</td>
-        <td th:text="${product.name}">Apple</td>
-        <td th:text="${product.getFarms()}">List of farmers</td>
-        <td th:text="${product.getCategories()}">List of farmers</td>
+        <td><a th:href="@{'/v1/products/'+${product.id}}" th:text="${product.name}">Apple</a></td>
+        <td><span th:each="farm, iterStat:${product.getFarms()}">
+            <a th:href="@{'/v1/farms/'+${farm.id}}" th:text="!${iterStat.last} ? ${farm.name} +',': ${farm.name} ">Farmer</a>
+        </span></td>
+        <td><span th:each="category, iterStat:${product.getCategories()}">
+            <a th:href="@{'/v1/categories/'+${category.id}}" th:text="!${iterStat.last} ? ${category.name} +',': ${category.name} ">Farmer</a>
+        </span></td>
     </tr>
 </table>
 <div th:replace="fragments/footer"></div>

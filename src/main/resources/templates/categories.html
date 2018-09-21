@@ -4,18 +4,20 @@
 
 <body>
 <div th:replace="fragments/navigation(selectedPage='Categories')"></div>
-<h1>Products Category Associations</h1>
+<h1 th:text="#{captions.categories}">Products Category Associations</h1>
 
-<table>
+<table class="table">
     <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Products</th>
+        <th th:text="#{captions.ID}">Id</th>
+        <th th:text="#{captions.name}">Name</th>
+        <th th:text="#{captions.products}">Products</th>
     </tr>
     <tr th:each="category:${categories}">
         <td th:text="${category.id}">1</td>
-        <td th:text="${category.name}">Apple</td>
-        <td th:text="${category.getProducts()}">List of farmers</td>
+        <td><a th:href="@{'/v1/categories/'+${category.id}}" th:text="${category.name}">organic/bio</a></td>
+        <td><span th:each="product, iterStat:${category.getProducts()}">
+            <a th:href="@{'/v1/products/'+${product.id}}" th:text="!${iterStat.last} ? ${product.name} +',': ${product.name} ">Apple</a>
+        </span></td>
     </tr>
 </table>
 </body>
