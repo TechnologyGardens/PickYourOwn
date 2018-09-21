@@ -39,6 +39,8 @@ jobs:
 
       # run tests!
       - run: mvn integration-test
+
+      # run Code Coverage
       - run: mvn cobertura:cobertura
 
       - run:
