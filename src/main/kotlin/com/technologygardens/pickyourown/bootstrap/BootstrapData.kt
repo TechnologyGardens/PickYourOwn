@@ -9,12 +9,14 @@ import com.technologygardens.pickyourown.repositories.elements.RegularBusinessHo
 import com.technologygardens.pickyourown.repositories.elements.SiteRespository
 import com.technologygardens.pickyourown.repositories.elements.SpecialEventBusinessHoursRepository
 import org.springframework.context.ApplicationListener
+import org.springframework.context.annotation.Profile
 import org.springframework.context.event.ContextRefreshedEvent
 import org.springframework.stereotype.Component
 import java.math.BigDecimal
 import java.time.ZonedDateTime
 
 @Component
+@Profile("default")
 class BootstrapData(private var farmRepository: FarmRepository,
                     private var farmerRepository: FarmerRepository,
                     private var productRepository: ProductRepository,

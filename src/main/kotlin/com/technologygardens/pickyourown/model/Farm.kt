@@ -2,6 +2,7 @@ package com.technologygardens.pickyourown.model
 
 import com.technologygardens.pickyourown.model.elements.Site
 import org.hibernate.annotations.Cascade
+import org.hibernate.annotations.Type
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import javax.persistence.*
@@ -21,6 +22,7 @@ open class Farm(
         @Lob
         var image: ByteArray = byteArrayOf(),
         @Lob
+        @Type(type = "org.hibernate.type.TextType")
         @field:NotBlank
         var description: String = ""
 ) {

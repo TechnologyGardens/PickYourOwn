@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/pyo_dev
+    username: ${DEV_DB_USERNAME}
+    password: ${DEV_DB_PASSWORD}
+    platform: mysql
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql
+    show-sql: true
+#    properties:
+#      javax:
+#        persistence:
+#          schema-generation:
+#            create-source: metadata
+#            scripts:
+#              action: drop-and-create
+#              drop-target: mysql_drop.sql
+#              create-target: mysql_create.sql
