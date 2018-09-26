@@ -16,7 +16,7 @@ class FarmerServiceAPI(private val farmerRepository: FarmerRepository) : FarmerS
     override fun getFarmers(): Iterable<Farmer> = this.farmerRepository.findAll()
 
 
-    override fun getFarmerById(id: Long): Farmer {
+    override fun getFarmerById(id: String): Farmer {
         val farmerOpt: Optional<Farmer> = farmerRepository.findById(id)
         if (!farmerOpt.isPresent)
             throw NotFoundException("Farmer with Id=${id} not found!")
@@ -29,7 +29,7 @@ class FarmerServiceAPI(private val farmerRepository: FarmerRepository) : FarmerS
         return this.farmerRepository.save(farmer)
     }
 
-    override fun deleteById(id: Long) {
+    override fun deleteById(id: String) {
         FarmServiceAPI.logger.debug("Delete farm ${id}")
         try {
             this.farmerRepository.deleteById(id)

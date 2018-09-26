@@ -4,7 +4,7 @@ import com.technologygardens.pickyourown.model.Farm
 
 interface FarmService {
     fun getFarms(): Iterable<Farm>
-    fun getFarmById(id: Long): Farm
-    fun deleteById(id: Long)
+    fun getFarmById(id: String): Farm
+    fun deleteById(id: String)
     fun save(farm: Farm) : Farm
 }

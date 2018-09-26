@@ -3,6 +3,7 @@ package com.technologygardens.pickyourown.model.elements
 import com.technologygardens.pickyourown.utils.minuteFmt
 import com.technologygardens.pickyourown.utils.monthFmt
 import java.time.ZonedDateTime
+import java.util.*
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -11,8 +12,7 @@ import javax.persistence.Id
 @Entity
 data class SpecialEventBusinessHours(
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long = 0L,
+        val id: String = UUID.randomUUID().toString(),
         var name: String = "",
         var opensAt: ZonedDateTime = ZonedDateTime.now(),
         var closesAt: ZonedDateTime = ZonedDateTime.now()) {

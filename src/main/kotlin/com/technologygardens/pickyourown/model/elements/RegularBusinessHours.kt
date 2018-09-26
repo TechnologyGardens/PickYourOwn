@@ -12,14 +12,13 @@ import javax.persistence.Id
 @Entity
 data class RegularBusinessHours(
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long = 0L,
+        val id: String = UUID.randomUUID().toString(),
         var opensAt: ZonedDateTime = ZonedDateTime.now(),
         var closesAt: ZonedDateTime = ZonedDateTime.now()) {
 
     var daysOfTheWeek: Int = 0
 
-    constructor(id: Long = 0L, daysOfTheWeek: String, opensAt: ZonedDateTime, closesAt: ZonedDateTime) : this(id, opensAt, closesAt) {
+    constructor(id: String = UUID.randomUUID().toString(), daysOfTheWeek: String, opensAt: ZonedDateTime, closesAt: ZonedDateTime) : this(id, opensAt, closesAt) {
         setDaysOfTheWeekSet(daysOfTheWeek)
     }
 

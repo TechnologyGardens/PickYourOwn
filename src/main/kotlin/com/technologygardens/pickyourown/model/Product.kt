@@ -2,19 +2,20 @@ package com.technologygardens.pickyourown.model
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.transaction.annotation.Transactional
+import java.util.*
 import javax.persistence.*
 
 @Entity
 class Product(@Id
-              @GeneratedValue(strategy = GenerationType.IDENTITY)
-              val id: Long = 0L,
+              val id: String = UUID.randomUUID().toString(),
               var name: String = ""
 ) {
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "farm_products", joinColumns = arrayOf(JoinColumn(name = "farm_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "product_id")))
     private var farms: MutableSet<Farm> = HashSet<Farm>()
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "category_products", joinColumns = arrayOf(JoinColumn(name = "category_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "product_id")))
     private var categories: MutableSet<Category> = HashSet<Category>()
 

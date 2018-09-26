@@ -2,16 +2,16 @@ package com.technologygardens.pickyourown.model
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.util.*
 import javax.persistence.*
 
 @Entity
 data class Category(
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long = 0L,
+        val id: String = UUID.randomUUID().toString(),
         var name: String = ""
 ) {
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
     private var products: MutableSet<Product> = HashSet<Product>()
 
     fun addProductRelationship(product: Product) {

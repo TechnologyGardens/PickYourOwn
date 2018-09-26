@@ -32,8 +32,8 @@ class ProductServiceAPITest {
     @Test
     fun getProducts() {
         val products = HashSet<Product>()
-        products.add(Product(1L, "Product 1"))
-        products.add(Product(2L, "Product 2"))
+        products.add(Product("1L", "Product 1"))
+        products.add(Product("2L", "Product 2"))
 
         Mockito.`when`(productRepository.findAll()).thenReturn(products)
 
@@ -45,26 +45,26 @@ class ProductServiceAPITest {
 
     @Test
     fun getProductById() {
-        val product = Product(1L, "Product 1")
+        val product = Product("1L", "Product 1")
         val productOpt: Optional<Product> = Optional.of(product)
 
-        Mockito.`when`(productRepository.findById(ArgumentMatchers.anyLong())).thenReturn(productOpt)
-        val result = productService.getProductById(1L)
+        Mockito.`when`(productRepository.findById(ArgumentMatchers.anyString())).thenReturn(productOpt)
+        val result = productService.getProductById("1L")
 
         assertNotNull("Product not found by the service!", result)
         assertEquals("Wrong Product returned!", result, product)
-        verify(productRepository, Mockito.times(1)).findById(ArgumentMatchers.anyLong())
+        verify(productRepository, Mockito.times(1)).findById(ArgumentMatchers.anyString())
     }
 
     @Test(expected = NotFoundException::class)
     fun getFarmById_NotFound() {
-        Mockito.`when`(productService.getProductById(ArgumentMatchers.anyLong())).thenReturn(null)
-        productService.getProductById(1L)
+        Mockito.`when`(productService.getProductById(ArgumentMatchers.anyString())).thenReturn(null)
+        productService.getProductById("1L")
     }
 
     @Test
     fun save() {
-        val product = Product(1L, "Apples")
+        val product = Product("1L", "Apples")
         Mockito.`when`(productRepository.save(ArgumentMatchers.any(Product::class.java))).thenReturn(product)
         val result = productService.save(product)
 
@@ -75,17 +75,17 @@ class ProductServiceAPITest {
 
     @Test
     fun deleteById() {
-        val id = 1L
+        val id = "1L"
 
         productService.deleteById(id)
 
-        verify(productRepository, Mockito.times(1)).deleteById(ArgumentMatchers.anyLong())
+        verify(productRepository, Mockito.times(1)).deleteById(ArgumentMatchers.anyString())
     }
 
     @Test(expected = NotFoundException::class)
     fun deleteById_NotFound() {
-        Mockito.`when`(productService.deleteById(ArgumentMatchers.anyLong())).thenThrow(NotFoundException::class.java)
-        productService.deleteById(-1L)
+        Mockito.`when`(productService.deleteById(ArgumentMatchers.anyString())).thenThrow(NotFoundException::class.java)
+        productService.deleteById("-1L")
     }
 
 }

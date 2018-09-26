@@ -10,6 +10,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.ArgumentMatchers.anyLong
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.times
@@ -34,8 +35,8 @@ class FarmerServiceAPITest {
     @Test
     fun getFarmers() {
         val farmers = HashSet<Farmer>()
-        farmers.add(Farmer(1L, "Farmer 1"))
-        farmers.add(Farmer(2L, "Farmer 2"))
+        farmers.add(Farmer("1L", "Farmer 1"))
+        farmers.add(Farmer("2L", "Farmer 2"))
 
         Mockito.`when`(farmerRepository.findAll()).thenReturn(farmers)
 
@@ -48,26 +49,26 @@ class FarmerServiceAPITest {
 
     @Test
     fun getFarmerById() {
-        val farmer = Farmer(1L, "Bill", "Mollison")
+        val farmer = Farmer("1L", "Bill", "Mollison")
         val farmerOpt: Optional<Farmer> = Optional.of(farmer)
 
-        Mockito.`when`(farmerRepository.findById(anyLong())).thenReturn(farmerOpt)
-        val result = farmerService.getFarmerById(1L)
+        Mockito.`when`(farmerRepository.findById(anyString())).thenReturn(farmerOpt)
+        val result = farmerService.getFarmerById("1L")
 
         assertNotNull("Farmer not found by the service!", result)
         assertEquals("Wrong Farmer returned!", result, farmer)
-        verify(farmerRepository, times(1)).findById(anyLong())
+        verify(farmerRepository, times(1)).findById(anyString())
     }
 
     @Test(expected = NotFoundException::class)
     fun getFarmerById_NotFound() {
-        Mockito.`when`(farmerService.getFarmerById(ArgumentMatchers.anyLong())).thenReturn(null)
-        farmerService.getFarmerById(-1L)
+        Mockito.`when`(farmerService.getFarmerById(ArgumentMatchers.anyString())).thenReturn(null)
+        farmerService.getFarmerById("-1L")
     }
 
     @Test
     fun save() {
-        val farmer = Farmer(1L, "Hristo", "Aladjov")
+        val farmer = Farmer("1L", "Hristo", "Aladjov")
 
         Mockito.`when`(farmerRepository.save(ArgumentMatchers.any(Farmer::class.java))).thenReturn(farmer)
         val result = farmerService.save(farmer)
@@ -79,17 +80,17 @@ class FarmerServiceAPITest {
 
     @Test
     fun deleteById() {
-        val id = 1L
+        val id = "1L"
 
         farmerService.deleteById(id)
 
-        verify(farmerRepository, Mockito.times(1)).deleteById(ArgumentMatchers.anyLong())
+        verify(farmerRepository, Mockito.times(1)).deleteById(ArgumentMatchers.anyString())
     }
 
     @Test(expected = NotFoundException::class)
     fun deleteById_NotFound() {
-        Mockito.`when`(farmerService.deleteById(ArgumentMatchers.anyLong())).thenThrow(NotFoundException::class.java)
-        farmerService.deleteById(-1L)
+        Mockito.`when`(farmerService.deleteById(ArgumentMatchers.anyString())).thenThrow(NotFoundException::class.java)
+        farmerService.deleteById("-1L")
     }
 
 }

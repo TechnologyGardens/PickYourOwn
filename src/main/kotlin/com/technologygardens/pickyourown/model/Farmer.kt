@@ -8,8 +8,7 @@ import javax.persistence.*
 @Entity
 class Farmer(
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long = 0L,
+        val id: String = UUID.randomUUID().toString(),
         var firstName: String = "",
         var lastName: String = "",
         //todo add image or avatar
@@ -18,7 +17,7 @@ class Farmer(
         var web: String = "",
         var telephone: String = "") {
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "farm_farmers", joinColumns = arrayOf(JoinColumn(name = "farmer_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "farm_id")))
     private var farms: MutableSet<Farm> = HashSet<Farm>()
 

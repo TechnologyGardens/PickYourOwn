@@ -42,8 +42,8 @@ class FarmererControllerTest {
     @Test
     fun getFarmers() {
         val farmerers = HashSet<Farmer>()
-        farmerers.add(Farmer(101L,"Bill","Mollison"))
-        farmerers.add(Farmer(202L,"Hristo","Aladjov"))
+        farmerers.add(Farmer("101L","Bill","Mollison"))
+        farmerers.add(Farmer("202L","Hristo","Aladjov"))
 
         Mockito.`when`(farmerService.getFarmers()).thenReturn(farmerers)
 
@@ -57,31 +57,23 @@ class FarmererControllerTest {
 
     @Test
     fun getFarmerById() {
-        val farmer  = Farmer(1L)
-        Mockito.`when`(farmerService.getFarmerById(ArgumentMatchers.anyLong())).thenReturn(farmer)
+        val farmer  = Farmer("101L")
+        Mockito.`when`(farmerService.getFarmerById(ArgumentMatchers.anyString())).thenReturn(farmer)
 
-        mockMVC.perform(MockMvcRequestBuilders.get("/v1/farmers/1"))
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/farmers/101L"))
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(MockMvcResultMatchers.view().name("farmer"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("farmer"))
-        Mockito.verify(farmerService, Mockito.times(1)).getFarmerById(ArgumentMatchers.eq(1L))
+        Mockito.verify(farmerService, Mockito.times(1)).getFarmerById(ArgumentMatchers.anyString())
     }
 
     @Test
     fun getFarmById_NotFound(){
-        Mockito.`when`(farmerService.getFarmerById(ArgumentMatchers.anyLong())).thenThrow(NotFoundException::class.java)
+        Mockito.`when`(farmerService.getFarmerById(ArgumentMatchers.anyString())).thenThrow(NotFoundException::class.java)
 
         mockMVC.perform(MockMvcRequestBuilders.get("/v1/farmers/1"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound)
                 .andExpect(MockMvcResultMatchers.view().name("404Error"))
-
-    }
-
-    @Test
-    fun getFarmById_BadRequest(){
-        mockMVC.perform(MockMvcRequestBuilders.get("/v1/farmers/abcd"))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest)
-                .andExpect(MockMvcResultMatchers.view().name("400Error"))
 
     }
 
@@ -97,30 +89,30 @@ class FarmererControllerTest {
 
     @Test
     fun saveFarmer() {
-        val farmer = Farmer(3L, "Bill", "Mollison")
+        val farmer = Farmer("303L", "Bill", "Mollison")
         //val anyFarmer = ArgumentMatchers.any(Farmer::class.java) // always returns null and can not be used
         Mockito.`when`(farmerService.save(farmer)).thenReturn(farmer)
         mockMVC.perform(MockMvcRequestBuilders.post("/v1/farmer/")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("id", "3")
+                .param("id", "303L")
                 .param("firstName", "Bill")
                 .param("lastName", "Mollison"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.view().name("redirect:/v1/farmers/3"))
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/v1/farmers/303L"))
         //  Mockito.verify(farmerService, Mockito.times(1)).save(any<Farmer>())
     }
 
     @Test
     fun updateFarmer() {
-        val farmer = Farmer(1L)
-        Mockito.`when`(farmerService.getFarmerById(ArgumentMatchers.anyLong())).thenReturn(farmer)
+        val farmer = Farmer("101L")
+        Mockito.`when`(farmerService.getFarmerById(ArgumentMatchers.anyString())).thenReturn(farmer)
 
         mockMVC.perform(MockMvcRequestBuilders.get("/v1/farmers/1/update"))
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(MockMvcResultMatchers.view().name("farmer-edit"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("farmer"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("isNewFarmer"))
-        Mockito.verify(farmerService, Mockito.times(1)).getFarmerById(ArgumentMatchers.eq(1L))
+        Mockito.verify(farmerService, Mockito.times(1)).getFarmerById(ArgumentMatchers.anyString())
     }
 
 
@@ -129,7 +121,7 @@ class FarmererControllerTest {
         mockMVC.perform(MockMvcRequestBuilders.get("/v1/farmers/1/delete"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection)
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/v1/farmers/"))
-        Mockito.verify(farmerService, Mockito.times(1)).deleteById(ArgumentMatchers.anyLong())
+        Mockito.verify(farmerService, Mockito.times(1)).deleteById(ArgumentMatchers.anyString())
     }
 
 }

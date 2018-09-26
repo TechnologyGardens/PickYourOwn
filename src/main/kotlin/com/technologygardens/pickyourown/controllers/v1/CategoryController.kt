@@ -20,7 +20,7 @@ class CategoryController(private val categoryService: CategoryService) {
 
     @RequestMapping("/v1/categories/{id}")
     fun getCategoryById(@PathVariable id: String, model: Model): String {
-        model.addAttribute("category", categoryService.getCategoryById(id.toLong()))
+        model.addAttribute("category", categoryService.getCategoryById(id))
         return "category"
     }
 
@@ -40,14 +40,14 @@ class CategoryController(private val categoryService: CategoryService) {
 
     @GetMapping("/v1/categories/{id}/update")
     fun updateCategory(@PathVariable id: String, model: Model): String {
-        model.addAttribute("category", categoryService.getCategoryById(id.toLong()))
+        model.addAttribute("category", categoryService.getCategoryById(id))
         model.addAttribute("isNewCategory", false)
         return "category-edit"
     }
 
     @GetMapping("/v1/categories/{id}/delete")
     fun deleteById(@PathVariable id: String): String {
-        categoryService.deleteById(id.toLong())
+        categoryService.deleteById(id)
         return "redirect:/v1/categories/"
     }
 
@@ -55,15 +55,6 @@ class CategoryController(private val categoryService: CategoryService) {
     @ExceptionHandler(NotFoundException::class)
     fun identifierNotFound(exception: NotFoundException): ModelAndView{
         val modelAndView = ModelAndView("404Error")
-        modelAndView.addObject("context", "Category")
-        modelAndView.addObject("exception", exception)
-        return  modelAndView
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NumberFormatException::class)
-    fun badRequest(exception: NumberFormatException): ModelAndView{
-        val modelAndView = ModelAndView("400Error")
         modelAndView.addObject("context", "Category")
         modelAndView.addObject("exception", exception)
         return  modelAndView

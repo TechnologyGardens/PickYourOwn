@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface FarmerRepository : CrudRepository<Farmer,Long> {
+interface FarmerRepository : CrudRepository<Farmer,String> {
     fun findByLastName(lastName: String) : Optional<Farmer>
     fun findByFirstName(firstName: String) : Optional<Farmer>
 }

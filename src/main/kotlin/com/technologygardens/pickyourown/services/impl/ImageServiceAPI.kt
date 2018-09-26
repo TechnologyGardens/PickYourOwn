@@ -12,7 +12,7 @@ import java.io.IOException
 
 @Service
 class ImageServiceAPI(private val farmRepository: FarmRepository) : ImageService {
-    override fun saveFarmImageFile(farmId: Long, file: MultipartFile) {
+    override fun saveFarmImageFile(farmId: String, file: MultipartFile) {
         try {
             val farm : Farm = farmRepository.findById(farmId).get()
             farm.image = file.bytes

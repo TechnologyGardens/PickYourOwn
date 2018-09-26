@@ -1,13 +1,13 @@
 package com.technologygardens.pickyourown.model
 
 import java.math.BigDecimal
+import java.util.*
 import javax.persistence.*
 
 @Entity
 class Price(
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long = 0L,
+        val id: String = UUID.randomUUID().toString(),
         @ManyToOne
         @JoinColumn(name = "farm_id")
         val farm: Farm = Farm(),

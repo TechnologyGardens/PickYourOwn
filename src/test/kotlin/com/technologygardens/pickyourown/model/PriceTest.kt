@@ -10,9 +10,9 @@ class PriceTest {
     lateinit var price: Price
     lateinit var farm: Farm
     lateinit var product: Product
-    val PRICE_TEST_ID = 100L
-    val FARM_TEST_ID = 1L
-    val PRODUCT_TEST_ID = 2L
+    val PRICE_TEST_ID = "100L"
+    val FARM_TEST_ID = "1L"
+    val PRODUCT_TEST_ID = "2L"
     val VALUE_TEST = BigDecimal.valueOf(250,2)
     val UNIT_TEST = "BGN/kg"
     val MIN_QUANTITY = 0
@@ -20,7 +20,7 @@ class PriceTest {
 
     @Before
     fun setUp() {
-        farm = Farm(FARM_TEST_ID,name="Farm 1",image = byteArrayOf(), description = "Best Farm",site = Site())
+        farm = Farm(FARM_TEST_ID, name ="Farm 1", image = byteArrayOf(), description = "Best Farm", site = Site())
         product = Product(PRODUCT_TEST_ID, "Product 1")
         price = Price(PRICE_TEST_ID, farm, product, VALUE_TEST, UNIT_TEST, MIN_QUANTITY, MAX_QUANTITY)
     }

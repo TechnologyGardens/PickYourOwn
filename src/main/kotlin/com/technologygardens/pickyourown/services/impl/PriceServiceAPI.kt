@@ -20,19 +20,19 @@ class PriceServiceAPI(private val priceRepository: PriceRepository) : PriceServi
             return ""
     }
 
-    override fun deleteById(id: Long) {
+    override fun deleteById(id: String) {
         logger.debug("Delete price  ${id}")
         this.priceRepository.deleteById(id)
     }
 
-    override fun deleteByFarmId(farmId: Long): Iterable<Price> {
+    override fun deleteByFarmId(farmId: String): Iterable<Price> {
         val prices: Iterable<Price> = priceRepository.findByFarmId(farmId)
         for (price in prices)
             deleteById(price.id)
         return prices
     }
 
-    override fun deleteByProductId(productId: Long): Iterable<Price> {
+    override fun deleteByProductId(productId: String): Iterable<Price> {
         val prices: Iterable<Price> = priceRepository.findByProductId(productId)
         for (price in prices)
             deleteById(price.id)

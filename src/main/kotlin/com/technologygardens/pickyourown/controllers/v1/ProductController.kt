@@ -19,7 +19,7 @@ class ProductController(private val productService: ProductService) {
 
     @GetMapping("/v1/products/{id}")
     fun getProductById(@PathVariable id: String, model: Model): String {
-        model.addAttribute("product", productService.getProductById(id.toLong()))
+        model.addAttribute("product", productService.getProductById(id))
         return "product"
     }
 
@@ -40,14 +40,14 @@ class ProductController(private val productService: ProductService) {
 
     @GetMapping("/v1/products/{id}/update")
     fun updateProduct(@PathVariable id: String, model: Model): String {
-        model.addAttribute("product", productService.getProductById(id.toLong()))
+        model.addAttribute("product", productService.getProductById(id))
         model.addAttribute("isNewProduct", false)
         return "product-edit"
     }
 
     @GetMapping("/v1/products/{id}/delete")
     fun deleteById(@PathVariable id: String): String {
-        productService.deleteById(id.toLong())
+        productService.deleteById(id)
         return "redirect:/v1/products/"
     }
 
@@ -60,12 +60,4 @@ class ProductController(private val productService: ProductService) {
         return  modelAndView
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NumberFormatException::class)
-    fun badRequest(exception: NumberFormatException): ModelAndView{
-        val modelAndView = ModelAndView("400Error")
-        modelAndView.addObject("context", "Product")
-        modelAndView.addObject("exception", exception)
-        return  modelAndView
-    }
 }
