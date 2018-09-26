@@ -15,7 +15,7 @@ class ProductServiceAPI(private val productRepository: ProductRepository) : Prod
     override fun getProducts(): Iterable<Product> = this.productRepository.findAll()
 
 
-    override fun getProductById(id: Long): Product {
+    override fun getProductById(id: String): Product {
         val productOpt: Optional<Product> = productRepository.findById(id)
         if (!productOpt.isPresent)
             throw NotFoundException("Product with Id=${id} not found!")
@@ -27,7 +27,7 @@ class ProductServiceAPI(private val productRepository: ProductRepository) : Prod
         return this.productRepository.save(product)
     }
 
-    override fun deleteById(id: Long) {
+    override fun deleteById(id: String) {
         FarmServiceAPI.logger.debug("Delete product ${id}")
         try {
             this.productRepository.deleteById(id)

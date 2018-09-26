@@ -7,19 +7,17 @@ import org.junit.Test
 
 import org.junit.Assert.*
 import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 class FarmTest {
-    val FARM_TEST_ID = 1L
+    val FARM_TEST_ID = "1L"
     val FARM_TEST_NAME = "Product One"
     val FARM_TEST_IMAGE = byteArrayOf(0,1,2,3,4,5,6,7,8)
     val FARM_TEST_DESCRIPTION = "Farm Description which is longer than 256 symbols. It does not contain any further information besides that: Farm Description which is longer than 256 symbols"
     val FARM_TEST_BUSINESS_HOURS = mutableSetOf<RegularBusinessHours>(
-            RegularBusinessHours(1001L,"weekdays", ZonedDateTime.parse("2018-05-01T10:00:00.0+02:00[Europe/Sofia]"), ZonedDateTime.parse("2018-05-01T10:00:00+02:00[Europe/Sofia]")),
-            RegularBusinessHours(1002L,"weekend", ZonedDateTime.parse("2018-05-01T10:00:00.0+02:00[Europe/Sofia]"), ZonedDateTime.parse("2018-05-01T14:00:00+02:00[Europe/Sofia]")))
+            RegularBusinessHours("1001L","weekdays", ZonedDateTime.parse("2018-05-01T10:00:00.0+02:00[Europe/Sofia]"), ZonedDateTime.parse("2018-05-01T10:00:00+02:00[Europe/Sofia]")),
+            RegularBusinessHours("1002L","weekend", ZonedDateTime.parse("2018-05-01T10:00:00.0+02:00[Europe/Sofia]"), ZonedDateTime.parse("2018-05-01T14:00:00+02:00[Europe/Sofia]")))
 
-    val FARM_TEST_SITE = Site(1003L,address = "1 Some street", city = "Sofia", stateProvince = "Sofia District", country = "Bulgaria", postalCode = "1000", directions = "trun left four times", regularBusinessHours = FARM_TEST_BUSINESS_HOURS, seasonOpens = "May 1", seasonCloses = "Oct 1")
+    val FARM_TEST_SITE = Site("1003L", address = "1 Some street", city = "Sofia", stateProvince = "Sofia District", country = "Bulgaria", postalCode = "1000", directions = "trun left four times", regularBusinessHours = FARM_TEST_BUSINESS_HOURS, seasonOpens = "May 1", seasonCloses = "Oct 1")
 
     lateinit var farmer1: Farmer
     lateinit var farmer2: Farmer
@@ -30,10 +28,10 @@ class FarmTest {
     @Before
     fun setUp() {
         farm = Farm(FARM_TEST_ID, FARM_TEST_NAME, FARM_TEST_IMAGE, FARM_TEST_DESCRIPTION, FARM_TEST_SITE)
-        farmer1 = Farmer(2L, firstName = "Bill", lastName = "Mollison", email = "sales@tagari.com", web = "http://www.tagari.com", telephone = "+61 364450945")
-        farmer2 = Farmer(3L, firstName = "Hristo", lastName = "Aladjov", email = "hristo.aladjov@technologygardens.com", web = "http://technologygardens.com", telephone = "+359 8888888888")
-        product1 = Product(128L, "Product 1")
-        product2 = Product(129L, "Product 2")
+        farmer1 = Farmer("2L", firstName = "Bill", lastName = "Mollison", email = "sales@tagari.com", web = "http://www.tagari.com", telephone = "+61 364450945")
+        farmer2 = Farmer("3L", firstName = "Hristo", lastName = "Aladjov", email = "hristo.aladjov@technologygardens.com", web = "http://technologygardens.com", telephone = "+359 8888888888")
+        product1 = Product("128L", "Product 1")
+        product2 = Product("129L", "Product 2")
     }
 
     @Test

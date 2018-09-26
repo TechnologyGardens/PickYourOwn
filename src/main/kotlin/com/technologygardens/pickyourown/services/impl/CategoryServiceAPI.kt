@@ -15,7 +15,7 @@ class CategoryServiceAPI(private val categoryRepository: CategoryRepository) : C
 
     override fun getCategories(): Iterable<Category> = categoryRepository.findAll()
 
-    override fun getCategoryById(id: Long): Category {
+    override fun getCategoryById(id: String): Category {
         val categoryOpt: Optional<Category> = categoryRepository.findById(id)
         if (!categoryOpt.isPresent)
             throw NotFoundException("Category with Id=${id} not found!")
@@ -27,7 +27,7 @@ class CategoryServiceAPI(private val categoryRepository: CategoryRepository) : C
         return this.categoryRepository.save(category)
     }
 
-    override fun deleteById(id: Long) {
+    override fun deleteById(id: String) {
         FarmServiceAPI.logger.debug("Delete farm ${id}")
         try {
             this.categoryRepository.deleteById(id)

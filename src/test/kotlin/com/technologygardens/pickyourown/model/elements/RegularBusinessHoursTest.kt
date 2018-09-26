@@ -8,7 +8,7 @@ import java.time.DayOfWeek
 import java.time.ZonedDateTime
 
 class RegularBusinessHoursTest {
-    val BUSINESS_HOURS_ID = 100L
+    val BUSINESS_HOURS_ID = "100L"
     val BUSINESS_HOURS_DAYS_OF_WEEK = "weekdays"
     val BUSINESS_HOURS_OPENS_AT = ZonedDateTime.parse("2018-05-21T10:00:00+02:00[Europe/Sofia]")
     val BUSINESS_HOURS_CLOSES_AT = ZonedDateTime.parse("2018-05-21T20:00:00+02:00[Europe/Sofia]")

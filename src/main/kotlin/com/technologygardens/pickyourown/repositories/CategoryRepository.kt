@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface CategoryRepository : CrudRepository<Category, Long> {
+interface CategoryRepository : CrudRepository<Category, String> {
     fun findByName(name : String) : Optional<Category>
 }

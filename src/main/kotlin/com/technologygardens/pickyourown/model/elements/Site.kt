@@ -2,6 +2,7 @@ package com.technologygardens.pickyourown.model.elements
 
 import com.technologygardens.pickyourown.model.Farm
 import org.hibernate.validator.constraints.URL
+import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
@@ -9,8 +10,7 @@ import javax.validation.constraints.Size
 @Entity
 data class Site(
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        val id: Long = 0L,
+        val id: String = UUID.randomUUID().toString(),
         @field:Size(min=0, max = 255)
         var address: String = "",
         @field:Size(min=0, max = 255)

@@ -24,14 +24,14 @@ class FarmController(private val farmService: FarmService, private val priceServ
 
     @GetMapping("/v1/farms/{id}")
     fun getFarmById(@PathVariable id: String, model: Model): String {
-        model.addAttribute("farm", farmService.getFarmById(id.toLong()))
+        model.addAttribute("farm", farmService.getFarmById(id))
         return "farm"
     }
 
     @GetMapping("/v1/farms/new")
     fun newFarm(model: Model): String {
         model.addAttribute("farm", Farm())
-        model.addAttribute("isNewFarm",true)
+        model.addAttribute("isNewFarm", true)
         return "farm-edit"
     }
 
@@ -50,14 +50,14 @@ class FarmController(private val farmService: FarmService, private val priceServ
 
     @GetMapping("/v1/farms/{id}/update")
     fun updateFarm(@PathVariable id: String, model: Model): String {
-        model.addAttribute("farm", farmService.getFarmById(id.toLong()))
+        model.addAttribute("farm", farmService.getFarmById(id))
         model.addAttribute("isNewFarm", false)
         return "farm-edit"
     }
 
     @GetMapping("/v1/farms/{id}/delete")
     fun deleteById(@PathVariable id: String): String {
-        farmService.deleteById(id.toLong())
+        farmService.deleteById(id)
         return "redirect:/v1/farms/"
     }
 
@@ -65,15 +65,6 @@ class FarmController(private val farmService: FarmService, private val priceServ
     @ExceptionHandler(NotFoundException::class)
     fun identifierNotFound(exception: NotFoundException): ModelAndView {
         val modelAndView = ModelAndView("404Error")
-        modelAndView.addObject("context", "Farm")
-        modelAndView.addObject("exception", exception)
-        return modelAndView
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NumberFormatException::class)
-    fun badRequest(exception: NumberFormatException): ModelAndView {
-        val modelAndView = ModelAndView("400Error")
         modelAndView.addObject("context", "Farm")
         modelAndView.addObject("exception", exception)
         return modelAndView

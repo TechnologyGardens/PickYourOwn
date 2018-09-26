@@ -8,8 +8,8 @@ import com.technologygardens.pickyourown.services.ImageService
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.anyLong
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -31,12 +31,12 @@ class ImageServiceAPITest {
 
     @Test
     fun saveFarmImageFileTest() {
-        val farm = Farm(1L)
+        val farm = Farm("1L")
         val farmOpt = Optional.of(farm)
         val multipartFile = MockMultipartFile("imagefile", "testing.txt", "text/plain",
                 "Non empty text file".toByteArray())
 
-        Mockito.`when`(farmRepository.findById(anyLong())).thenReturn(farmOpt)
+        Mockito.`when`(farmRepository.findById(anyString())).thenReturn(farmOpt)
 
         imageService.saveFarmImageFile(farm.id, multipartFile)
 

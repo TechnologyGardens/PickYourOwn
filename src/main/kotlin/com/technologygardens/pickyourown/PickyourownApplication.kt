@@ -1,7 +1,5 @@
 package com.technologygardens.pickyourown
 
-import com.technologygardens.pickyourown.bootstrap.FakeDataSourceConfig
-import org.springframework.beans.factory.getBean
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.ApplicationContext
@@ -10,8 +8,5 @@ import org.springframework.context.ApplicationContext
 class PickyourownApplication
 
 fun main(args: Array<String>) {
-    val context: ApplicationContext = runApplication<PickyourownApplication>(*args)
-    val fds = context.getBean(FakeDataSourceConfig::class) as FakeDataSourceConfig
-
-    println("############# db: ${fds.dbName} username: ${fds.username} url: ${fds.url}")
+    runApplication<PickyourownApplication>(*args)
 }

@@ -8,7 +8,7 @@ import com.technologygardens.pickyourown.services.ImageService
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers.anyLong
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -52,13 +52,13 @@ class FarmImageControllerTest {
     @Test
     @Throws(Exception::class)
     fun showUploadFormTest() {
-        val farm = Farm(1L)
-        Mockito.`when`(farmService.getFarmById(anyLong())).thenReturn(farm)
+        val farm = Farm("1L")
+        Mockito.`when`(farmService.getFarmById(anyString())).thenReturn(farm)
 
-        mockMVC.perform(MockMvcRequestBuilders.get("/v1/farms/1/image"))
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/farms/1L/image"))
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(model().attributeExists("farm"))
-        Mockito.verify(farmService, Mockito.times(1)).getFarmById(anyLong())
+        Mockito.verify(farmService, Mockito.times(1)).getFarmById(anyString())
     }
 
     @Test
@@ -67,19 +67,19 @@ class FarmImageControllerTest {
         val multipartFile = MockMultipartFile("imagefile", "testing.txt", "text/plain",
                 "Non empty text file".toByteArray())
 
-        mockMVC.perform(multipart("/v1/farms/1/image").file(multipartFile))
+        mockMVC.perform(multipart("/v1/farms/1L/image").file(multipartFile))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.header().string("Location", "/v1/farms/1"))
+                .andExpect(MockMvcResultMatchers.header().string("Location", "/v1/farms/1L"))
 
-        Mockito.verify(imageService, Mockito.times(1)).saveFarmImageFile(anyLong(), any())
+        Mockito.verify(imageService, Mockito.times(1)).saveFarmImageFile(anyString(), any())
     }
 
     @Test
     fun renderImageFromDB() {
         val image = "fake image".toByteArray()
-        val farm = Farm(1L,"Wild Farm", image, "test farm with image", Site())
-        Mockito.`when`(farmService.getFarmById(anyLong())).thenReturn(farm)
-        val response : MockHttpServletResponse = mockMVC.perform(MockMvcRequestBuilders.get("/v1/farms/1/farmimage"))
+        val farm = Farm("1L","Wild Farm", image, "test farm with image", Site())
+        Mockito.`when`(farmService.getFarmById(anyString())).thenReturn(farm)
+        val response : MockHttpServletResponse = mockMVC.perform(MockMvcRequestBuilders.get("/v1/farms/1L/farmimage"))
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andReturn().response
         Assert.assertEquals(image.size,response.contentAsByteArray.size)

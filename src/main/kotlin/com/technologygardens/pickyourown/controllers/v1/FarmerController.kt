@@ -18,7 +18,7 @@ class FarmerController(private val farmerService: FarmerService) {
     }
     @GetMapping("/v1/farmers/{id}")
     fun getFarmById(@PathVariable id: String, model: Model): String {
-        model.addAttribute("farmer", farmerService.getFarmerById(id.toLong()))
+        model.addAttribute("farmer", farmerService.getFarmerById(id))
         return "farmer"
     }
     
@@ -39,14 +39,14 @@ class FarmerController(private val farmerService: FarmerService) {
 
     @GetMapping("/v1/farmers/{id}/update")
     fun updateFarmer(@PathVariable id: String, model: Model): String {
-        model.addAttribute("farmer", farmerService.getFarmerById(id.toLong()))
+        model.addAttribute("farmer", farmerService.getFarmerById(id))
         model.addAttribute("isNewFarmer", false)
         return "farmer-edit"
     }
 
     @GetMapping("/v1/farmers/{id}/delete")
     fun deleteById(@PathVariable id: String): String {
-        farmerService.deleteById(id.toLong())
+        farmerService.deleteById(id)
         return "redirect:/v1/farmers/"
     }
 
@@ -59,12 +59,4 @@ class FarmerController(private val farmerService: FarmerService) {
         return  modelAndView
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NumberFormatException::class)
-    fun badRequest(exception: NumberFormatException): ModelAndView{
-        val modelAndView = ModelAndView("400Error")
-        modelAndView.addObject("context", "Farmer")
-        modelAndView.addObject("exception", exception)
-        return  modelAndView
-    }
 }

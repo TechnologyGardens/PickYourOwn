@@ -8,10 +8,9 @@ import java.time.Month
 import java.time.ZonedDateTime
 import java.time.format.TextStyle
 import java.util.*
-import kotlin.math.exp
 
 class SpecialEventBusinessHoursTest {
-    val SPECIAL_EVENT_ID = 100L
+    val SPECIAL_EVENT_ID = "100L"
     val SPECIAL_EVENT_NAME = "Eniov den"
     val SPECIAL_EVENT_OPENS_AT = ZonedDateTime.parse("2018-05-21T10:00:00+02:00[Europe/Sofia]")
     val SPECIAL_EVENT_CLOSES_AT = ZonedDateTime.parse("2018-05-21T20:00:00+02:00[Europe/Sofia]")

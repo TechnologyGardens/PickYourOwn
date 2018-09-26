@@ -8,7 +8,7 @@ import java.time.ZonedDateTime
 
 class SiteTest {
 
-    val SITE_TEST_ID = 0L
+    val SITE_TEST_ID = "0L"
     val SITE_TEST_ADDRESS = "31 Rulla Road"
     val SITE_TEST_CITY = "Sisters Creek"
     val SITE_TEST_STATE_PROVINCE = "Tasmania"
@@ -16,7 +16,7 @@ class SiteTest {
     val SITE_TEST_POSTAL_CODE = "7325"
     val SITE_TEST_DIRECTIONS = "Take highway A2 from the airport"
     val SITE_TEST_REGULAR_BUSINESS_HOURS: MutableSet<RegularBusinessHours> = mutableSetOf<RegularBusinessHours>(RegularBusinessHours(daysOfTheWeek = "Tuesday,Thursday", opensAt = ZonedDateTime.parse("2018-05-01T09:00:00+10:00[Australia/Tasmania]"), closesAt = ZonedDateTime.parse("2018-10-01T16:30:00+10:00[Australia/Tasmania]")))
-    val SITE_TEST_SPECIAL_EVENT_BUSINES_HOURS: MutableSet<SpecialEventBusinessHours> = mutableSetOf<SpecialEventBusinessHours>(SpecialEventBusinessHours(112L,"Festivale",opensAt = ZonedDateTime.parse("2018-02-08T16:00:00+10:00[Australia/Tasmania]"), closesAt = ZonedDateTime.parse("2018-02-10T02:00:00+10:00[Australia/Tasmania]")))
+    val SITE_TEST_SPECIAL_EVENT_BUSINES_HOURS: MutableSet<SpecialEventBusinessHours> = mutableSetOf<SpecialEventBusinessHours>(SpecialEventBusinessHours("112L","Festivale", opensAt = ZonedDateTime.parse("2018-02-08T16:00:00+10:00[Australia/Tasmania]"), closesAt = ZonedDateTime.parse("2018-02-10T02:00:00+10:00[Australia/Tasmania]")))
     val SITE_TEST_SEASON_OPENS = "May"
     val SITE_TEST_SEASON_CLOSES = "June"
     val SITE_TEST_SOCIAL = "https://twitter.com/bill_mollison"
@@ -28,7 +28,7 @@ class SiteTest {
     @Before
     fun setUp() {
         site = Site(SITE_TEST_ID, SITE_TEST_ADDRESS, SITE_TEST_CITY, SITE_TEST_STATE_PROVINCE, SITE_TEST_COUNTRY, SITE_TEST_POSTAL_CODE, SITE_TEST_DIRECTIONS, SITE_TEST_REGULAR_BUSINESS_HOURS, SITE_TEST_SPECIAL_EVENT_BUSINES_HOURS, SITE_TEST_SEASON_OPENS, SITE_TEST_SEASON_CLOSES, SITE_TEST_SOCIAL, SITE_TEST_WEB)
-        farm = Farm(101L, "Farm 1",image = byteArrayOf(), description = "description", site = site)
+        farm = Farm("101L", "Farm 1", image = byteArrayOf(), description = "description", site = site)
     }
 
     @Test
@@ -135,7 +135,7 @@ class SiteTest {
 
     @Test
     fun setSpecialEventBusinessHours() {
-        val testSpecialEventBusinessHours = mutableSetOf<SpecialEventBusinessHours>(SpecialEventBusinessHours(110L,name = "New Year's Eve", opensAt = ZonedDateTime.parse("2018-12-31T10:00:00+02:00[Europe/Sofia]"), closesAt = ZonedDateTime.parse("2019-01-01T18:00:00+02:00[Europe/Sofia]")))
+        val testSpecialEventBusinessHours = mutableSetOf<SpecialEventBusinessHours>(SpecialEventBusinessHours("110L", name = "New Year's Eve", opensAt = ZonedDateTime.parse("2018-12-31T10:00:00+02:00[Europe/Sofia]"), closesAt = ZonedDateTime.parse("2019-01-01T18:00:00+02:00[Europe/Sofia]")))
         site.specialEventBusinessHours = testSpecialEventBusinessHours
         assertEquals(testSpecialEventBusinessHours, site.specialEventBusinessHours)
     }
@@ -196,7 +196,7 @@ class SiteTest {
 
     @Test
     fun setFarm() {
-        val testFarm = Farm(111L,"Test Farm",description = "the newest on the block")
+        val testFarm = Farm("111L","Test Farm", description = "the newest on the block")
         site.farm= testFarm
         assertEquals(testFarm, site.farm)
     }

@@ -34,8 +34,8 @@ class CategoryServiceAPITest {
     @Test
     fun getCategories() {
         val categories = HashSet<Category>()
-        categories.add(Category(1L, "Category 1"))
-        categories.add(Category(2L, "Category 2"))
+        categories.add(Category("1L", "Category 1"))
+        categories.add(Category("2L", "Category 2"))
 
         Mockito.`when`(categoryRepository.findAll()).thenReturn(categories)
 
@@ -47,26 +47,26 @@ class CategoryServiceAPITest {
 
     @Test
     fun getCategoryById() {
-        val category = Category(1L, "Category 1")
+        val category = Category("1L", "Category 1")
         val categoryOpt: Optional<Category> = Optional.of(category)
 
-        Mockito.`when`(categoryRepository.findById(ArgumentMatchers.anyLong())).thenReturn(categoryOpt)
-        val result = categoryService.getCategoryById(1L)
+        Mockito.`when`(categoryRepository.findById(ArgumentMatchers.anyString())).thenReturn(categoryOpt)
+        val result = categoryService.getCategoryById("1L")
 
         Assert.assertNotNull("Farmer not found by the service!", result)
         assertEquals("Wrong Farmer returned!", result, category)
-        verify(categoryRepository, Mockito.times(1)).findById(ArgumentMatchers.anyLong())
+        verify(categoryRepository, Mockito.times(1)).findById(ArgumentMatchers.anyString())
     }
 
     @Test(expected = NotFoundException::class)
     fun getCategoryById_NotFound() {
-        Mockito.`when`(categoryService.getCategoryById(ArgumentMatchers.anyLong())).thenReturn(null)
-        categoryService.getCategoryById(1L)
+        Mockito.`when`(categoryService.getCategoryById(ArgumentMatchers.anyString())).thenReturn(null)
+        categoryService.getCategoryById("1L")
     }
 
     @Test
     fun save() {
-        val category = Category(1L, "Category 1")
+        val category = Category("1L", "Category 1")
 
         Mockito.`when`(categoryRepository.save(ArgumentMatchers.any(Category::class.java))).thenReturn(category)
         val result = categoryService.save(category)
@@ -78,17 +78,17 @@ class CategoryServiceAPITest {
 
     @Test
     fun deleteById() {
-        val id = 1L
+        val id = "1L"
 
         categoryService.deleteById(id)
 
-        verify(categoryRepository, Mockito.times(1)).deleteById(ArgumentMatchers.anyLong())
+        verify(categoryRepository, Mockito.times(1)).deleteById(ArgumentMatchers.anyString())
     }
 
     @Test(expected = NotFoundException::class)
     fun deleteById_NotFound() {
-        Mockito.`when`(categoryService.deleteById(ArgumentMatchers.anyLong())).thenThrow(NotFoundException::class.java)
-        categoryService.deleteById(-1L)
+        Mockito.`when`(categoryService.deleteById(ArgumentMatchers.anyString())).thenThrow(NotFoundException::class.java)
+        categoryService.deleteById("-1L")
     }
 
 }

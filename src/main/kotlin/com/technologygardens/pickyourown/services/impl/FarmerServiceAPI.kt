@@ -7,34 +7,29 @@ import com.technologygardens.pickyourown.services.FarmerService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import java.lang.Exception
 import java.util.*
 
 @Service
 class FarmerServiceAPI(private val farmerRepository: FarmerRepository) : FarmerService {
 
-    @Transactional
     override fun getFarmers(): Iterable<Farmer> = this.farmerRepository.findAll()
 
 
-    @Transactional
-    override fun getFarmerById(id: Long): Farmer {
+    override fun getFarmerById(id: String): Farmer {
         val farmerOpt: Optional<Farmer> = farmerRepository.findById(id)
         if (!farmerOpt.isPresent)
             throw NotFoundException("Farmer with Id=${id} not found!")
         return farmerOpt.get()
     }
 
-    @Transactional
     override fun save(farmer: Farmer) : Farmer
     {
         FarmServiceAPI.logger.debug("Save new farm ${farmer.getName()} ($farmer)")
         return this.farmerRepository.save(farmer)
     }
 
-    @Transactional
-    override fun deleteById(id: Long) {
+    override fun deleteById(id: String) {
         FarmServiceAPI.logger.debug("Delete farm ${id}")
         try {
             this.farmerRepository.deleteById(id)

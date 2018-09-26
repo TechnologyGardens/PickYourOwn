@@ -9,14 +9,14 @@ class CategoryTest {
     lateinit var category: Category
     lateinit var product1: Product
     lateinit var product2: Product
-    val CATEGORY_TEST_ID = 65536L
+    val CATEGORY_TEST_ID = "65536L"
     val CATEGORY_TEST_NAME = "test category"
 
     @Before
     fun setUp() {
         category = Category(CATEGORY_TEST_ID, CATEGORY_TEST_NAME)
-        product1 = Product(128L,"Product 1")
-        product2 = Product(129L,"Product 2")
+        product1 = Product("128L","Product 1")
+        product2 = Product("129L","Product 2")
     }
 
     @Test

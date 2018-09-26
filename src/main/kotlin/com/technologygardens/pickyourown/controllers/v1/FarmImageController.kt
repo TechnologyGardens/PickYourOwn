@@ -16,19 +16,19 @@ import javax.servlet.http.HttpServletResponse
 class FarmImageController (private val imageService: ImageService, private val farmService: FarmService) {
     @GetMapping("/v1/farms/{id}/image")
     fun showUploadForm(@PathVariable id: String, model: Model): String {
-        model.addAttribute("farm", farmService.getFarmById(java.lang.Long.valueOf(id)))
+        model.addAttribute("farm", farmService.getFarmById(id))
         return "farm-image_upload_form"
     }
 
     @PostMapping("/v1/farms/{id}/image")
     fun handleImagePost(@PathVariable id: String, @RequestParam("imagefile") file: MultipartFile): String {
-        imageService.saveFarmImageFile(java.lang.Long.valueOf(id), file)
+        imageService.saveFarmImageFile(id, file)
         return "redirect:/v1/farms/$id"
     }
 
     @GetMapping("/v1/farms/{id}/farmimage")
     fun renderImageFromDB(@PathVariable id: String, response: HttpServletResponse) {
-        val farm : Farm = farmService.getFarmById(id.toLong())
+        val farm : Farm = farmService.getFarmById(id)
         response.contentType = "image/jpeg"
         farm.image.inputStream().copyTo(response.outputStream)
     }

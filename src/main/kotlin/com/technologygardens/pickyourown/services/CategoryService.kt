@@ -4,7 +4,7 @@ import com.technologygardens.pickyourown.model.Category
 
 interface CategoryService{
     fun getCategories(): Iterable<Category>
-    fun getCategoryById(id: Long): Category
+    fun getCategoryById(id: String): Category
     fun save(category: Category) : Category
-    fun deleteById(id: Long)
+    fun deleteById(id: String)
 }

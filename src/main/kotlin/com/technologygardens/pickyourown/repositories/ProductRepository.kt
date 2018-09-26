@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface ProductRepository  : CrudRepository<Product, Long> {
+interface ProductRepository  : CrudRepository<Product, String> {
     fun findByName(name : String) : Optional<Product>
 
 }

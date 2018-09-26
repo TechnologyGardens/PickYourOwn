@@ -6,7 +6,7 @@ import org.junit.Test
 import org.junit.Assert.*
 
 class FarmerTest {
-    val FARMER_TEST_ID = 100L
+    val FARMER_TEST_ID = "100L"
     val FARMER_TEST_FIRST_NAME = "Bill"
     val FARMER_TEST_LAST_NAME = "Mollison"
     val FARMER_TEST_EMAIL = "sales@tagari.com"
@@ -21,8 +21,8 @@ class FarmerTest {
     @Before
     fun setUp() {
         farmer = Farmer(id = FARMER_TEST_ID, firstName = FARMER_TEST_FIRST_NAME, lastName = FARMER_TEST_LAST_NAME, email = FARMER_TEST_EMAIL, social = FARMER_TEST_SOCIAL, web = FARMER_TEST_WEB, telephone = FARMER_TEST_TELEPHONE)
-        farm1 = Farm(101L, "Farm 1",  "description")
-        farm2 = Farm(102L, "Farm 2",  "description")
+        farm1 = Farm("101L", "Farm 1",  "description")
+        farm2 = Farm("102L", "Farm 2",  "description")
     }
 
     @Test

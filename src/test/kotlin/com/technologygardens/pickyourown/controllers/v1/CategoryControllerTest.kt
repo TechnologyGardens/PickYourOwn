@@ -46,8 +46,8 @@ class CategoryControllerTest {
     @Test
     fun getCategories() {
         val categories: HashSet<Category> = HashSet<Category>()
-        categories.add(Category(1L))
-        categories.add(Category(2L))
+        categories.add(Category("1L"))
+        categories.add(Category("2L"))
         Mockito.`when`(categoryService.getCategories()).thenReturn(categories)
 
         mockMVC.perform(get("/v1/categories"))
@@ -60,31 +60,25 @@ class CategoryControllerTest {
 
     @Test
     fun getCategoryById() {
-        val category = Category(1L)
-        Mockito.`when`(categoryService.getCategoryById(ArgumentMatchers.anyLong())).thenReturn(category)
+        val category = Category("1L")
+        Mockito.`when`(categoryService.getCategoryById(ArgumentMatchers.anyString())).thenReturn(category)
 
-        mockMVC.perform(MockMvcRequestBuilders.get("/v1/categories/1"))
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/categories/1L"))
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(MockMvcResultMatchers.view().name("category"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("category"))
-        Mockito.verify(categoryService, Mockito.times(1)).getCategoryById(ArgumentMatchers.eq(1L))
+        Mockito.verify(categoryService, Mockito.times(1)).getCategoryById(ArgumentMatchers.anyString())
     }
 
     @Test
     fun getCategoryById_NotFound() {
-        Mockito.`when`(categoryService.getCategoryById(ArgumentMatchers.anyLong())).thenThrow(NotFoundException::class.java)
+        Mockito.`when`(categoryService.getCategoryById(ArgumentMatchers.anyString())).thenThrow(NotFoundException::class.java)
 
-        mockMVC.perform(MockMvcRequestBuilders.get("/v1/categories/1"))
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/categories/1L"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound)
                 .andExpect(view().name("404Error"))
     }
 
-    @Test
-    fun getCategoryById_BadRequest() {
-        mockMVC.perform(MockMvcRequestBuilders.get("/v1/categories/abc"))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest)
-                .andExpect(view().name("400Error"))
-    }
 
     @Test
     fun newCategory() {
@@ -98,37 +92,37 @@ class CategoryControllerTest {
 
     @Test
     fun saveCategory() {
-        val category = Category(3L, "Category 1")
+        val category = Category("3L", "Category 1")
         //val anyCategory = ArgumentMatchers.any(Category::class.java) // always returns null and can not be used
         Mockito.`when`(categoryService.save(category)).thenReturn(category)
         mockMVC.perform(MockMvcRequestBuilders.post("/v1/category/")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("id", "3")
+                .param("id", "3L")
                 .param("name", "Category 1"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.view().name("redirect:/v1/categories/3"))
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/v1/categories/3L"))
         //  Mockito.verify(categoryService, Mockito.times(1)).save(any<Category>())
     }
 
     @Test
     fun deleteById() {
-        mockMVC.perform(MockMvcRequestBuilders.get("/v1/categories/1/delete"))
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/categories/1L/delete"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection)
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/v1/categories/"))
-        Mockito.verify(categoryService, Mockito.times(1)).deleteById(ArgumentMatchers.anyLong())
+        Mockito.verify(categoryService, Mockito.times(1)).deleteById(ArgumentMatchers.anyString())
     }
 
     @Test
     fun updateCategory() {
-        val category = Category(1L)
-        Mockito.`when`(categoryService.getCategoryById(ArgumentMatchers.anyLong())).thenReturn(category)
+        val category = Category("1L")
+        Mockito.`when`(categoryService.getCategoryById(ArgumentMatchers.anyString())).thenReturn(category)
 
-        mockMVC.perform(MockMvcRequestBuilders.get("/v1/categories/1/update"))
+        mockMVC.perform(MockMvcRequestBuilders.get("/v1/categories/1L/update"))
                 .andExpect(MockMvcResultMatchers.status().isOk)
                 .andExpect(MockMvcResultMatchers.view().name("category-edit"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("category"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("isNewCategory"))
-        Mockito.verify(categoryService, Mockito.times(1)).getCategoryById(ArgumentMatchers.eq(1L))
+        Mockito.verify(categoryService, Mockito.times(1)).getCategoryById(ArgumentMatchers.anyString())
     }
 
 
