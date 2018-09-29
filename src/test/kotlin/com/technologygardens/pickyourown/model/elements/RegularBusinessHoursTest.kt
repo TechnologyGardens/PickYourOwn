@@ -5,13 +5,13 @@ import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
 import java.time.DayOfWeek
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 
 class RegularBusinessHoursTest {
     val BUSINESS_HOURS_ID = "100L"
     val BUSINESS_HOURS_DAYS_OF_WEEK = "weekdays"
-    val BUSINESS_HOURS_OPENS_AT = ZonedDateTime.parse("2018-05-21T10:00:00+02:00[Europe/Sofia]")
-    val BUSINESS_HOURS_CLOSES_AT = ZonedDateTime.parse("2018-05-21T20:00:00+02:00[Europe/Sofia]")
+    val BUSINESS_HOURS_OPENS_AT = LocalDateTime.parse("2018-05-21T10:00:00")
+    val BUSINESS_HOURS_CLOSES_AT = LocalDateTime.parse("2018-05-21T20:00:00")
 
     lateinit var businessHours: RegularBusinessHours
     @Before
@@ -105,7 +105,7 @@ class RegularBusinessHoursTest {
 
     @Test
     fun setOpensAt() {
-        val testOpensAt = ZonedDateTime.now()
+        val testOpensAt = LocalDateTime.now()
         businessHours.opensAt = testOpensAt
         assertEquals(testOpensAt, businessHours.opensAt)
     }
@@ -117,7 +117,7 @@ class RegularBusinessHoursTest {
 
     @Test
     fun setClosesAt() {
-        val testClosesAt = ZonedDateTime.now()
+        val testClosesAt = LocalDateTime.now()
         businessHours.closesAt = testClosesAt
         assertEquals(testClosesAt, businessHours.closesAt)
     }

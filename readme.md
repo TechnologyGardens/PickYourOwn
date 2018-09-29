@@ -15,7 +15,7 @@ relationships
 
 Pick Your Own is currently investigating two persistence approaches.
 - PickYourOwnSQL branch with support for H2 memory database,MySQL and Postgres
-- PickYourOwnNoSQL branch with support for MongoDB and Redis
+- PickYourOwnNoSQL branch with support for MongoDB
 
 Database passwords and usernames are read from environmental variables
  DEV_DB_USERNAME=pyo_dev_user;DEV_DB_PASSWORD=PickYourOwn2018;PROD_DB_USERNAME=pyo_prod_user;PROD_DB_PASSWORD=PickYourOwn2018

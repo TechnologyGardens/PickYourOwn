@@ -4,19 +4,19 @@ import com.technologygardens.pickyourown.utils.minuteFmt
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.DayOfWeek
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 import java.util.*
 
 @Document
 data class RegularBusinessHours(
         @Id
         val id: String = UUID.randomUUID().toString(),
-        var opensAt: ZonedDateTime = ZonedDateTime.now(),
-        var closesAt: ZonedDateTime = ZonedDateTime.now()) {
+        var opensAt: LocalDateTime = LocalDateTime.now(),
+        var closesAt: LocalDateTime = LocalDateTime.now()) {
 
     var daysOfTheWeek: Int = 0
 
-    constructor(id: String = UUID.randomUUID().toString(), daysOfTheWeek: String, opensAt: ZonedDateTime, closesAt: ZonedDateTime) : this(id, opensAt, closesAt) {
+    constructor(id: String = UUID.randomUUID().toString(), daysOfTheWeek: String, opensAt: LocalDateTime, closesAt: LocalDateTime) : this(id, opensAt, closesAt) {
         setDaysOfTheWeekSet(daysOfTheWeek)
     }
 

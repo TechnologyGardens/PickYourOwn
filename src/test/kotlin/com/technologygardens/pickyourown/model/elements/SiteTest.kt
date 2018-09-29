@@ -4,7 +4,7 @@ import com.technologygardens.pickyourown.model.Farm
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 
 class SiteTest {
 
@@ -15,8 +15,8 @@ class SiteTest {
     val SITE_TEST_COUNTRY = "Australia"
     val SITE_TEST_POSTAL_CODE = "7325"
     val SITE_TEST_DIRECTIONS = "Take highway A2 from the airport"
-    val SITE_TEST_REGULAR_BUSINESS_HOURS: MutableSet<RegularBusinessHours> = mutableSetOf<RegularBusinessHours>(RegularBusinessHours(daysOfTheWeek = "Tuesday,Thursday", opensAt = ZonedDateTime.parse("2018-05-01T09:00:00+10:00[Australia/Tasmania]"), closesAt = ZonedDateTime.parse("2018-10-01T16:30:00+10:00[Australia/Tasmania]")))
-    val SITE_TEST_SPECIAL_EVENT_BUSINES_HOURS: MutableSet<SpecialEventBusinessHours> = mutableSetOf<SpecialEventBusinessHours>(SpecialEventBusinessHours("112L","Festivale", opensAt = ZonedDateTime.parse("2018-02-08T16:00:00+10:00[Australia/Tasmania]"), closesAt = ZonedDateTime.parse("2018-02-10T02:00:00+10:00[Australia/Tasmania]")))
+    val SITE_TEST_REGULAR_BUSINESS_HOURS: MutableSet<RegularBusinessHours> = mutableSetOf<RegularBusinessHours>(RegularBusinessHours(daysOfTheWeek = "Tuesday,Thursday", opensAt = LocalDateTime.parse("2018-05-01T09:00:00"), closesAt = LocalDateTime.parse("2018-10-01T16:30:00")))
+    val SITE_TEST_SPECIAL_EVENT_BUSINES_HOURS: MutableSet<SpecialEventBusinessHours> = mutableSetOf<SpecialEventBusinessHours>(SpecialEventBusinessHours("112L","Festivale", opensAt = LocalDateTime.parse("2018-02-08T16:00:00"), closesAt = LocalDateTime.parse("2018-02-10T02:00:00")))
     val SITE_TEST_SEASON_OPENS = "May"
     val SITE_TEST_SEASON_CLOSES = "June"
     val SITE_TEST_SOCIAL = "https://twitter.com/bill_mollison"
@@ -123,7 +123,7 @@ class SiteTest {
 
     @Test
     fun setRegularBusinessHours() {
-        val testRegularBusinessHours = mutableSetOf<RegularBusinessHours>(RegularBusinessHours(daysOfTheWeek = "Tuesday,Wednesday,Thursday,Friday", opensAt = ZonedDateTime.parse("2018-05-01T10:00:00+02:00[Europe/Sofia]"), closesAt = ZonedDateTime.parse("2018-10-01T18:00:00+02:00[Europe/Sofia]")))
+        val testRegularBusinessHours = mutableSetOf<RegularBusinessHours>(RegularBusinessHours(daysOfTheWeek = "Tuesday,Wednesday,Thursday,Friday", opensAt = LocalDateTime.parse("2018-05-01T10:00:00"), closesAt = LocalDateTime.parse("2018-10-01T18:00:00")))
         site.regularBusinessHours = testRegularBusinessHours
         assertEquals(testRegularBusinessHours, site.regularBusinessHours)
     }
@@ -135,7 +135,7 @@ class SiteTest {
 
     @Test
     fun setSpecialEventBusinessHours() {
-        val testSpecialEventBusinessHours = mutableSetOf<SpecialEventBusinessHours>(SpecialEventBusinessHours("110L", name = "New Year's Eve", opensAt = ZonedDateTime.parse("2018-12-31T10:00:00+02:00[Europe/Sofia]"), closesAt = ZonedDateTime.parse("2019-01-01T18:00:00+02:00[Europe/Sofia]")))
+        val testSpecialEventBusinessHours = mutableSetOf<SpecialEventBusinessHours>(SpecialEventBusinessHours("110L", name = "New Year's Eve", opensAt = LocalDateTime.parse("2018-12-31T10:00:00"), closesAt = LocalDateTime.parse("2019-01-01T18:00:00")))
         site.specialEventBusinessHours = testSpecialEventBusinessHours
         assertEquals(testSpecialEventBusinessHours, site.specialEventBusinessHours)
     }

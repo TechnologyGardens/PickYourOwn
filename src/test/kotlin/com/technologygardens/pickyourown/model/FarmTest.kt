@@ -6,7 +6,7 @@ import org.junit.Before
 import org.junit.Test
 
 import org.junit.Assert.*
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 
 class FarmTest {
     val FARM_TEST_ID = "1L"
@@ -14,8 +14,8 @@ class FarmTest {
     val FARM_TEST_IMAGE = byteArrayOf(0,1,2,3,4,5,6,7,8)
     val FARM_TEST_DESCRIPTION = "Farm Description which is longer than 256 symbols. It does not contain any further information besides that: Farm Description which is longer than 256 symbols"
     val FARM_TEST_BUSINESS_HOURS = mutableSetOf<RegularBusinessHours>(
-            RegularBusinessHours("1001L","weekdays", ZonedDateTime.parse("2018-05-01T10:00:00.0+02:00[Europe/Sofia]"), ZonedDateTime.parse("2018-05-01T10:00:00+02:00[Europe/Sofia]")),
-            RegularBusinessHours("1002L","weekend", ZonedDateTime.parse("2018-05-01T10:00:00.0+02:00[Europe/Sofia]"), ZonedDateTime.parse("2018-05-01T14:00:00+02:00[Europe/Sofia]")))
+            RegularBusinessHours("1001L","weekdays", LocalDateTime.parse("2018-05-01T10:00:00.0"), LocalDateTime.parse("2018-05-01T10:00:00")),
+            RegularBusinessHours("1002L","weekend", LocalDateTime.parse("2018-05-01T10:00:00.0"), LocalDateTime.parse("2018-05-01T14:00:00")))
 
     val FARM_TEST_SITE = Site("1003L", address = "1 Some street", city = "Sofia", stateProvince = "Sofia District", country = "Bulgaria", postalCode = "1000", directions = "trun left four times", regularBusinessHours = FARM_TEST_BUSINESS_HOURS, seasonOpens = "May 1", seasonCloses = "Oct 1")
 
@@ -41,7 +41,6 @@ class FarmTest {
         assert(farmers.contains(farmer1))
         assertEquals(farmers.size, 1)
         assertEquals(farmers.iterator().next(), farmer1)
-        assert(farmer1.getFarms().contains(farm))
     }
 
     @Test
@@ -51,8 +50,6 @@ class FarmTest {
         val farmers: List<Farmer> = farm.getFarmers()
         assert(farmers.contains(farmer1))
         assertEquals(farmers.size, 1)
-        assertEquals(farmers.iterator().next(), farmer1)
-        assert(farmer1.getFarms().contains(farm))
     }
 
     @Test
@@ -61,8 +58,6 @@ class FarmTest {
         val products: List<Product> = farm.getProducts()
         assert(products.contains(product1))
         assertEquals(products.size, 1)
-        assertEquals(products.iterator().next(), product1)
-        assert(product1.getFarms().contains(farm))
     }
 
     @Test
@@ -72,8 +67,6 @@ class FarmTest {
         val products: List<Product> = farm.getProducts()
         assert(products.contains(product1))
         assertEquals(products.size, 1)
-        assertEquals(products.iterator().next(), product1)
-        assert(product1.getFarms().contains(farm))
     }
 
     @Test
@@ -107,8 +100,6 @@ class FarmTest {
         assert(farmers.contains(farmer1))
         assertFalse(farmers.contains(farmer2))
         assertEquals(sizeBefore, farmers.size)
-        assert(farmer1.getFarms().contains(farm))
-        assertFalse(farmer2.getFarms().contains(farm))
     }
 
     @Test
@@ -121,8 +112,6 @@ class FarmTest {
         assertFalse(farmers.contains(farmer1))
         assert(farmers.contains(farmer2))
         assertEquals(sizeBefore - 1, farmers.size)
-        assert(farmer2.getFarms().contains(farm))
-        assertFalse(farmer1.getFarms().contains(farm))
     }
 
     @Test
@@ -134,8 +123,6 @@ class FarmTest {
         assert(products.contains(product1))
         assertFalse(products.contains(product2))
         assertEquals(sizeBefore, products.size)
-        assert(product1.getFarms().contains(farm))
-        assertFalse(product2.getFarms().contains(farm))
     }
 
     @Test
@@ -148,8 +135,6 @@ class FarmTest {
         assertFalse(products.contains(product1))
         assert(products.contains(product2))
         assertEquals(sizeBefore - 1, products.size)
-        assert(product2.getFarms().contains(farm))
-        assertFalse(product1.getFarms().contains(farm))
     }
 
 

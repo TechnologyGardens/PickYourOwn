@@ -26,7 +26,6 @@ class CategoryTest {
         assert(products.contains(product1))
         assertEquals(products.size,1)
         assertEquals(products.iterator().next(),product1)
-        assert(product1.getCategories().contains(category))
     }
 
     @Test
@@ -37,7 +36,6 @@ class CategoryTest {
         assert(products.contains(product1))
         assertEquals(products.size,1)
         assertEquals(products.iterator().next(),product1)
-        assert(product1.getCategories().contains(category))
     }
 
     @Test
@@ -59,8 +57,6 @@ class CategoryTest {
         assert(products.contains(product1))
         assertFalse(products.contains(product2))
         assertEquals(sizeBefore,products.size)
-        assert(product1.getCategories().contains(category))
-        assertFalse(product2.getCategories().contains(category))
     }
 
     @Test
@@ -73,8 +69,6 @@ class CategoryTest {
         assertFalse(products.contains(product1))
         assert(products.contains(product2))
         assertEquals(sizeBefore-1,products.size)
-        assert(product2.getCategories().contains(category))
-        assertFalse(product1.getCategories().contains(category))
     }
 
     @Test

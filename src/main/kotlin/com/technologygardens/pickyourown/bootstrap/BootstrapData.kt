@@ -9,13 +9,15 @@ import com.technologygardens.pickyourown.repositories.elements.RegularBusinessHo
 import com.technologygardens.pickyourown.repositories.elements.SiteRespository
 import com.technologygardens.pickyourown.repositories.elements.SpecialEventBusinessHoursRepository
 import org.springframework.context.ApplicationListener
+import org.springframework.context.annotation.Profile
 import org.springframework.context.event.ContextRefreshedEvent
 import org.springframework.stereotype.Component
 import java.math.BigDecimal
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 
 
 @Component
+@Profile("dev-mongo","dev-redis")
 class BootstrapData(private var farmRepository: FarmRepository,
                     private var farmerRepository: FarmerRepository,
                     private var productRepository: ProductRepository,
@@ -28,7 +30,8 @@ class BootstrapData(private var farmRepository: FarmRepository,
 
 
     override fun onApplicationEvent(event: ContextRefreshedEvent) {
-        generateData()
+        if (farmRepository.count() == 0L)
+            generateData()
     }
 
     fun generateData() {
@@ -40,11 +43,11 @@ class BootstrapData(private var farmRepository: FarmRepository,
 
 
         val regularHours = HashSet<RegularBusinessHours>()
-        val weekdays = RegularBusinessHours(daysOfTheWeek = "Tuesday,Wednesday,Thursday,Friday", opensAt = ZonedDateTime.parse("2018-05-01T10:00:00+02:00[Europe/Sofia]"), closesAt = ZonedDateTime.parse("2018-10-01T18:00:00+02:00[Europe/Sofia]"))
+        val weekdays = RegularBusinessHours(daysOfTheWeek = "Tuesday,Wednesday,Thursday,Friday", opensAt = LocalDateTime.parse("2018-05-01T10:00:00"), closesAt = LocalDateTime.parse("2018-10-01T18:00:00"))
         regularHours.add(weekdays)
-        val weekend = RegularBusinessHours(daysOfTheWeek = "Weekends", opensAt = ZonedDateTime.parse("2018-05-01T10:00:00+02:00[Europe/Sofia]"), closesAt = ZonedDateTime.parse("2018-10-01T20:00:00+02:00[Europe/Sofia]"))
+        val weekend = RegularBusinessHours(daysOfTheWeek = "Weekends", opensAt = LocalDateTime.parse("2018-05-01T10:00:00"), closesAt = LocalDateTime.parse("2018-10-01T20:00:00"))
         regularHours.add(weekend)
-        val eniovDen = SpecialEventBusinessHours(name = "Eniov Den", opensAt = ZonedDateTime.parse("2018-05-21T10:00:00+02:00[Europe/Sofia]"), closesAt = ZonedDateTime.parse("2018-05-21T22:00:00+02:00[Europe/Sofia]"))
+        val eniovDen = SpecialEventBusinessHours(name = "Eniov Den", opensAt = LocalDateTime.parse("2018-05-21T10:00:00"), closesAt = LocalDateTime.parse("2018-05-21T22:00:00"))
         val specialEvents: MutableSet<SpecialEventBusinessHours> = mutableSetOf(eniovDen)
 
         regularBusinessHoursReposiory.save(weekdays)
@@ -124,7 +127,6 @@ class BootstrapData(private var farmRepository: FarmRepository,
         val zahari_price_gt5kg = Price(farm = zahari, product = apples, value = BigDecimal.valueOf(150, 2), minQuantity = 5)
         priceRepository.save(zahari_price_1_5kg)
         priceRepository.save(zahari_price_gt5kg)
-
 
 
     }

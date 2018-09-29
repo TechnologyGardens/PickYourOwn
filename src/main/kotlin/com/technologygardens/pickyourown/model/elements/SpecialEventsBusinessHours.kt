@@ -2,7 +2,7 @@ package com.technologygardens.pickyourown.model.elements
 
 import com.technologygardens.pickyourown.utils.minuteFmt
 import com.technologygardens.pickyourown.utils.monthFmt
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 import java.util.*
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
@@ -12,8 +12,8 @@ data class SpecialEventBusinessHours(
         @Id
         val id: String = UUID.randomUUID().toString(),
         var name: String = "",
-        var opensAt: ZonedDateTime = ZonedDateTime.now(),
-        var closesAt: ZonedDateTime = ZonedDateTime.now()) {
+        var opensAt: LocalDateTime = LocalDateTime.now(),
+        var closesAt: LocalDateTime = LocalDateTime.now()) {
 
     fun getDescription(): String {
         val hours = "${opensAt.hour}:${minuteFmt(opensAt.minute)}-${closesAt.hour}:${minuteFmt(closesAt.minute)}"

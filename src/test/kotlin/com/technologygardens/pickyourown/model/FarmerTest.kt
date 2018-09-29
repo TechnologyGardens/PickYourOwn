@@ -32,7 +32,6 @@ class FarmerTest {
         assert(farms.contains(farm1))
         assertEquals(farms.size, 1)
         assertEquals(farms.iterator().next(), farm1)
-        assert(farm1.getFarmers().contains(farmer))
     }
 
     @Test
@@ -43,7 +42,6 @@ class FarmerTest {
         assert(farms.contains(farm1))
         assertEquals(farms.size, 1)
         assertEquals(farms.iterator().next(), farm1)
-        assert(farm1.getFarmers().contains(farmer))
     }
 
     @Test
@@ -65,8 +63,6 @@ class FarmerTest {
         assertFalse(farms.contains(farm1))
         assert(farms.contains(farm2))
         assertEquals(sizeBefore, farms.size)
-        assert(farm2.getFarmers().contains(farmer))
-        assertFalse(farm1.getFarmers().contains(farmer))
     }
 
     @Test
@@ -79,8 +75,6 @@ class FarmerTest {
         assertFalse("Farm1 was removed and should not be contained in farms", farms.contains(farm1))
         assertTrue("Farm 2 is not removed and should be contained in farms", farms.contains(farm2))
         assertEquals("Number of associated farms should be decreased with one", sizeBefore - 1, farms.size)
-        assertTrue("Farmers list of Farm2 should contain farmer", farm2.getFarmers().contains(farmer))
-        assertFalse("Farm1 to farmer relationship was removed so Farmers list shudl no longer contain farmer", farm1.getFarmers().contains(farmer))
     }
 
     @Test
