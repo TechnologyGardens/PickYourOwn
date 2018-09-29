@@ -4,12 +4,10 @@ import com.technologygardens.pickyourown.utils.minuteFmt
 import com.technologygardens.pickyourown.utils.monthFmt
 import java.time.ZonedDateTime
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
 
-@Entity
+@Document
 data class SpecialEventBusinessHours(
         @Id
         val id: String = UUID.randomUUID().toString(),

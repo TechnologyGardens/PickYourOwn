@@ -1,9 +1,8 @@
 package com.technologygardens.pickyourown.model.elements
 
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
+import org.junit.Test
 import java.time.Month
 import java.time.ZonedDateTime
 import java.time.format.TextStyle

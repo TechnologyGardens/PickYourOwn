@@ -1,27 +1,25 @@
 package com.technologygardens.pickyourown.model
 
 import com.technologygardens.pickyourown.model.elements.Site
-import org.hibernate.annotations.Cascade
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.transaction.annotation.Transactional
 import java.util.*
-import javax.persistence.*
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.DBRef
+import org.springframework.data.mongodb.core.mapping.Document
 import javax.validation.Valid
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
+import kotlin.collections.ArrayList
 
-@Entity
+@Document
 open class Farm(
         @Id
-        @Cascade(org.hibernate.annotations.CascadeType.ALL)
         val id: String = UUID.randomUUID().toString(),
         @field:Size(min=1, max = 255)
         var name: String = "",
         //todo add logo of the farm
-        @Lob
         var image: ByteArray = byteArrayOf(),
-        @Lob
         @field:NotBlank
         var description: String = ""
 ) {
@@ -37,25 +35,23 @@ open class Farm(
                 name: String,
                 description: String) : this(id, name, byteArrayOf(), description)
 
-    @OneToOne(cascade = arrayOf(CascadeType.ALL))
     @Valid
+    @DBRef
     var site: Site = Site()
         set (value) {
             field = value
             if (field.farm != this)
                 field.farm = this
         }
-
-    @ManyToMany(mappedBy = "farms", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
-    private var farmers: MutableSet<Farmer> = HashSet<Farmer>()
-
-    @ManyToMany(mappedBy = "farms", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.EAGER)
-    private var products: MutableSet<Product> = HashSet<Product>()
+    @DBRef
+    private var farmers: MutableList<Farmer> = ArrayList<Farmer>()
+    @DBRef
+    private var products: MutableList<Product> = ArrayList<Product>()
 
     fun addFarmerRelationship(farmer: Farmer) {
         if (!farmers.contains(farmer)) {
             farmers.add(farmer)
-            farmer.addFarmRelationship(this)
+//            farmer.addFarmRelationship(this)
             logger.debug("Add Farm ${this.id} (${this.name}) Farmer ${farmer.id} (${farmer.getName()}) Relationship")
 
         }
@@ -64,19 +60,19 @@ open class Farm(
     fun addProductRelationship(product: Product) {
         if (!products.contains(product)) {
             products.add(product)
-            product.addFarmRelationship(this)
+//            product.addFarmRelationship(this)
             logger.debug("Add Farm ${this.id} (${this.name}) Product ${product.id} (${product.name}) Relationship")
         }
     }
 
-    fun getFarmers(): Set<Farmer> = farmers
+    fun getFarmers(): List<Farmer> = farmers
 
-    fun getProducts(): Set<Product> = products
+    fun getProducts(): List<Product> = products
 
     fun removeFarmerRelationship(farmer: Farmer) {
         if (farmers.contains(farmer)) {
             farmers.remove(farmer)
-            farmer.removeFarmRelationship(this)
+//            farmer.removeFarmRelationship(this)
             logger.debug("Remove Farm ${this.id} (${this.name}) Farmer ${farmer.id} (${farmer.getName()}) Relationship")
         }
     }
@@ -84,7 +80,7 @@ open class Farm(
     fun removeProductRelationship(product: Product) {
         if (products.contains(product)) {
             products.remove(product)
-            product.removeFarmRelationship(this)
+//            product.removeFarmRelationship(this)
             logger.debug("Remove Farm ${this.id} (${this.name}) Product ${product.id} (${product.name}) Relationship")
         }
     }

@@ -22,7 +22,7 @@ class CategoryTest {
     @Test
     fun addProductRelationship_Nonexistent() {
         category.addProductRelationship(product1)
-        val products : Set<Product> = category.getProducts()
+        val products : List<Product> = category.getProducts()
         assert(products.contains(product1))
         assertEquals(products.size,1)
         assertEquals(products.iterator().next(),product1)
@@ -33,7 +33,7 @@ class CategoryTest {
     fun addProductRelationship_Existent() {
         category.addProductRelationship(product1)
         category.addProductRelationship(product1)
-        val products : Set<Product> = category.getProducts()
+        val products : List<Product> = category.getProducts()
         assert(products.contains(product1))
         assertEquals(products.size,1)
         assertEquals(products.iterator().next(),product1)
@@ -44,7 +44,7 @@ class CategoryTest {
     fun getProducts() {
         category.addProductRelationship(product1)
         category.addProductRelationship(product2)
-        val products : Set<Product> = category.getProducts()
+        val products : List<Product> = category.getProducts()
         assert(products.contains(product1))
         assert(products.contains(product2))
         assertEquals(products.size,2)
@@ -55,7 +55,7 @@ class CategoryTest {
         category.addProductRelationship(product1)
         val sizeBefore = category.getProducts().size
         category.removeProductRelationship(product2)
-        val products : Set<Product> = category.getProducts()
+        val products : List<Product> = category.getProducts()
         assert(products.contains(product1))
         assertFalse(products.contains(product2))
         assertEquals(sizeBefore,products.size)
@@ -69,7 +69,7 @@ class CategoryTest {
         category.addProductRelationship(product2)
         val sizeBefore = category.getProducts().size
         category.removeProductRelationship(product1)
-        val products : Set<Product> = category.getProducts()
+        val products : List<Product> = category.getProducts()
         assertFalse(products.contains(product1))
         assert(products.contains(product2))
         assertEquals(sizeBefore-1,products.size)

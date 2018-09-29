@@ -37,7 +37,7 @@ class FarmTest {
     @Test
     fun addFarmerRelationship_Nonexistent() {
         farm.addFarmerRelationship(farmer1)
-        val farmers: Set<Farmer> = farm.getFarmers()
+        val farmers: List<Farmer> = farm.getFarmers()
         assert(farmers.contains(farmer1))
         assertEquals(farmers.size, 1)
         assertEquals(farmers.iterator().next(), farmer1)
@@ -48,7 +48,7 @@ class FarmTest {
     fun addFarmerRelationship_Existent() {
         farm.addFarmerRelationship(farmer1)
         farm.addFarmerRelationship(farmer1)
-        val farmers: Set<Farmer> = farm.getFarmers()
+        val farmers: List<Farmer> = farm.getFarmers()
         assert(farmers.contains(farmer1))
         assertEquals(farmers.size, 1)
         assertEquals(farmers.iterator().next(), farmer1)
@@ -58,7 +58,7 @@ class FarmTest {
     @Test
     fun addProductRelationship_Nonexistent() {
         farm.addProductRelationship(product1)
-        val products: Set<Product> = farm.getProducts()
+        val products: List<Product> = farm.getProducts()
         assert(products.contains(product1))
         assertEquals(products.size, 1)
         assertEquals(products.iterator().next(), product1)
@@ -69,7 +69,7 @@ class FarmTest {
     fun addProductRelationship_Existent() {
         farm.addProductRelationship(product1)
         farm.addProductRelationship(product1)
-        val products: Set<Product> = farm.getProducts()
+        val products: List<Product> = farm.getProducts()
         assert(products.contains(product1))
         assertEquals(products.size, 1)
         assertEquals(products.iterator().next(), product1)
@@ -78,7 +78,7 @@ class FarmTest {
 
     @Test
     fun getFarmers() {
-        val farmers: Set<Farmer> = farm.getFarmers()
+        val farmers: List<Farmer> = farm.getFarmers()
         assertEquals(farmers.size, 0)
         farm.addFarmerRelationship(farmer1)
         farm.addFarmerRelationship(farmer2)
@@ -89,7 +89,7 @@ class FarmTest {
 
     @Test
     fun getProducts() {
-        val products: Set<Product> = farm.getProducts()
+        val products: List<Product> = farm.getProducts()
         assertEquals(products.size, 0)
         farm.addProductRelationship(product1)
         farm.addProductRelationship(product2)
@@ -103,7 +103,7 @@ class FarmTest {
         farm.addFarmerRelationship(farmer1)
         val sizeBefore = farm.getFarmers().size
         farm.removeFarmerRelationship(farmer2)
-        val farmers: Set<Farmer> = farm.getFarmers()
+        val farmers: List<Farmer> = farm.getFarmers()
         assert(farmers.contains(farmer1))
         assertFalse(farmers.contains(farmer2))
         assertEquals(sizeBefore, farmers.size)
@@ -117,7 +117,7 @@ class FarmTest {
         farm.addFarmerRelationship(farmer2)
         val sizeBefore = farm.getFarmers().size
         farm.removeFarmerRelationship(farmer1)
-        val farmers: Set<Farmer> = farm.getFarmers()
+        val farmers: List<Farmer> = farm.getFarmers()
         assertFalse(farmers.contains(farmer1))
         assert(farmers.contains(farmer2))
         assertEquals(sizeBefore - 1, farmers.size)
@@ -130,7 +130,7 @@ class FarmTest {
         farm.addProductRelationship(product1)
         val sizeBefore = farm.getProducts().size
         farm.removeProductRelationship(product2)
-        val products: Set<Product> = farm.getProducts()
+        val products: List<Product> = farm.getProducts()
         assert(products.contains(product1))
         assertFalse(products.contains(product2))
         assertEquals(sizeBefore, products.size)
@@ -144,7 +144,7 @@ class FarmTest {
         farm.addProductRelationship(product2)
         val sizeBefore = farm.getProducts().size
         farm.removeProductRelationship(product1)
-        val products: Set<Product> = farm.getProducts()
+        val products: List<Product> = farm.getProducts()
         assertFalse(products.contains(product1))
         assert(products.contains(product2))
         assertEquals(sizeBefore - 1, products.size)

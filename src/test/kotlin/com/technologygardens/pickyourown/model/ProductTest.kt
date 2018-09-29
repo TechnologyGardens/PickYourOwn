@@ -27,7 +27,7 @@ class ProductTest {
     @Test
     fun addFarmRelationship_Nonexistent() {
         product.addFarmRelationship(farm1)
-        val farms: Set<Farm> = product.getFarms()
+        val farms: List<Farm> = product.getFarms()
         assert(farms.contains(farm1))
         assertEquals(farms.size, 1)
         assertEquals(farms.iterator().next(), farm1)
@@ -38,7 +38,7 @@ class ProductTest {
     fun addFarmRelationship_Existent() {
         product.addFarmRelationship(farm1)
         product.addFarmRelationship(farm1)
-        val farms: Set<Farm> = product.getFarms()
+        val farms: List<Farm> = product.getFarms()
         assert(farms.contains(farm1))
         assertEquals(farms.size, 1)
         assertEquals(farms.iterator().next(), farm1)
@@ -48,7 +48,7 @@ class ProductTest {
     @Test
     fun addCategoryRelationship_Nonexistent() {
         product.addCategoryRelationship(category1)
-        val categories: Set<Category> = product.getCategories()
+        val categories: List<Category> = product.getCategories()
         assert(categories.contains(category1))
         assertEquals(categories.size, 1)
         assertEquals(categories.iterator().next(), category1)
@@ -59,7 +59,7 @@ class ProductTest {
     fun addCategoryRelationship_Existent() {
         product.addCategoryRelationship(category1)
         product.addCategoryRelationship(category1)
-        val categories: Set<Category> = product.getCategories()
+        val categories: List<Category> = product.getCategories()
         assert(categories.contains(category1))
         assertEquals(categories.size, 1)
         assertEquals(categories.iterator().next(), category1)
@@ -70,7 +70,7 @@ class ProductTest {
     fun getFarms() {
         product.addFarmRelationship(farm1)
         product.addFarmRelationship(farm2)
-        val farms: Set<Farm> = product.getFarms()
+        val farms: List<Farm> = product.getFarms()
         assert(farms.contains(farm1))
         assert(farms.contains(farm2))
         assertEquals(farms.size, 2)
@@ -80,7 +80,7 @@ class ProductTest {
     fun getCategories() {
         product.addCategoryRelationship(category1)
         product.addCategoryRelationship(category2)
-        val categories: Set<Category> = product.getCategories()
+        val categories: List<Category> = product.getCategories()
         assert(categories.contains(category1))
         assert(categories.contains(category2))
         assertEquals(categories.size, 2)
@@ -91,7 +91,7 @@ class ProductTest {
         product.addFarmRelationship(farm2)
         val sizeBefore = product.getFarms().size
         product.removeFarmRelationship(farm1)
-        val farms: Set<Farm> = product.getFarms()
+        val farms: List<Farm> = product.getFarms()
         assertFalse(farms.contains(farm1))
         assert(farms.contains(farm2))
         assertEquals(sizeBefore, farms.size)
@@ -105,7 +105,7 @@ class ProductTest {
         product.addFarmRelationship(farm2)
         val sizeBefore = product.getFarms().size
         product.removeFarmRelationship(farm1)
-        val farms: Set<Farm> = product.getFarms()
+        val farms: List<Farm> = product.getFarms()
         assertFalse(farms.contains(farm1))
         assert(farms.contains(farm2))
         assertEquals(sizeBefore-1, farms.size)
@@ -118,7 +118,7 @@ class ProductTest {
         product.addCategoryRelationship(category2)
         val sizeBefore = product.getCategories().size
         product.removeCategoryRelationship(category1)
-        val categories: Set<Category> = product.getCategories()
+        val categories: List<Category> = product.getCategories()
         assertFalse(categories.contains(category1))
         assert(categories.contains(category2))
         assertEquals(sizeBefore, categories.size)
@@ -132,7 +132,7 @@ class ProductTest {
         product.addCategoryRelationship(category2)
         val sizeBefore = product.getCategories().size
         product.removeCategoryRelationship(category1)
-        val categories: Set<Category> = product.getCategories()
+        val categories: List<Category> = product.getCategories()
         assertFalse(categories.contains(category1))
         assert(categories.contains(category2))
         assertEquals(sizeBefore-1, categories.size)

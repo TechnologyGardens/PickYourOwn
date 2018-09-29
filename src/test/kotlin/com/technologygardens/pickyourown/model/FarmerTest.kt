@@ -28,7 +28,7 @@ class FarmerTest {
     @Test
     fun addFarmRelationship_Nonexistent() {
         farmer.addFarmRelationship(farm1)
-        val farms: Set<Farm> = farmer.getFarms()
+        val farms: List<Farm> = farmer.getFarms()
         assert(farms.contains(farm1))
         assertEquals(farms.size, 1)
         assertEquals(farms.iterator().next(), farm1)
@@ -39,7 +39,7 @@ class FarmerTest {
     fun addFarmRelationship_Existent() {
         farmer.addFarmRelationship(farm1)
         farmer.addFarmRelationship(farm1)
-        val farms: Set<Farm> = farmer.getFarms()
+        val farms: List<Farm> = farmer.getFarms()
         assert(farms.contains(farm1))
         assertEquals(farms.size, 1)
         assertEquals(farms.iterator().next(), farm1)
@@ -50,7 +50,7 @@ class FarmerTest {
     fun getFarms() {
         farmer.addFarmRelationship(farm1)
         farmer.addFarmRelationship(farm2)
-        val farms: Set<Farm> = farmer.getFarms()
+        val farms: List<Farm> = farmer.getFarms()
         assert(farms.contains(farm1))
         assert(farms.contains(farm2))
         assertEquals(farms.size, 2)
@@ -61,7 +61,7 @@ class FarmerTest {
         farmer.addFarmRelationship(farm2)
         val sizeBefore = farmer.getFarms().size
         farmer.removeFarmRelationship(farm1)
-        val farms: Set<Farm> = farmer.getFarms()
+        val farms: List<Farm> = farmer.getFarms()
         assertFalse(farms.contains(farm1))
         assert(farms.contains(farm2))
         assertEquals(sizeBefore, farms.size)
@@ -75,7 +75,7 @@ class FarmerTest {
         farmer.addFarmRelationship(farm2)
         val sizeBefore = farmer.getFarms().size
         farmer.removeFarmRelationship(farm1)
-        val farms: Set<Farm> = farmer.getFarms()
+        val farms: List<Farm> = farmer.getFarms()
         assertFalse("Farm1 was removed and should not be contained in farms", farms.contains(farm1))
         assertTrue("Farm 2 is not removed and should be contained in farms", farms.contains(farm2))
         assertEquals("Number of associated farms should be decreased with one", sizeBefore - 1, farms.size)

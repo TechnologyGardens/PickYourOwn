@@ -3,11 +3,12 @@ package com.technologygardens.pickyourown.model.elements
 import com.technologygardens.pickyourown.model.Farm
 import org.hibernate.validator.constraints.URL
 import java.util.*
-import javax.persistence.*
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
 
-@Entity
+@Document
 data class Site(
         @Id
         val id: String = UUID.randomUUID().toString(),
@@ -23,11 +24,7 @@ data class Site(
         var postalCode: String = "",
         @field:NotBlank
         var directions: String = "Please provide directions to your farm site",
-        @OneToMany(cascade = arrayOf(CascadeType.ALL))
-        @JoinColumn(name = "regular_business_hours_id")
         var regularBusinessHours: MutableSet<RegularBusinessHours> = mutableSetOf<RegularBusinessHours>(),
-        @OneToMany(cascade = arrayOf(CascadeType.ALL))
-        @JoinColumn(name = "special_event_business_hours_id")
         var specialEventBusinessHours: MutableSet<SpecialEventBusinessHours> = mutableSetOf<SpecialEventBusinessHours>(),
         var seasonOpens: String = "",
         var seasonCloses: String = "",
@@ -46,7 +43,6 @@ data class Site(
         }
     }
 
-    @OneToOne
     var farm: Farm? = null
         set (value) {
             field = value

@@ -3,9 +3,11 @@ package com.technologygardens.pickyourown.model
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.*
-import javax.persistence.*
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.DBRef
+import org.springframework.data.mongodb.core.mapping.Document
 
-@Entity
+@Document
 class Farmer(
         @Id
         val id: String = UUID.randomUUID().toString(),
@@ -16,15 +18,13 @@ class Farmer(
         var social: String = "",
         var web: String = "",
         var telephone: String = "") {
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "farm_farmers", joinColumns = arrayOf(JoinColumn(name = "farmer_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "farm_id")))
-    private var farms: MutableSet<Farm> = HashSet<Farm>()
+    @DBRef
+    private var farms: MutableList<Farm> = ArrayList<Farm>()
 
     fun addFarmRelationship(farm: Farm) {
         if (!farms.contains(farm)) {
             farms.add(farm)
-            farm.addFarmerRelationship(this)
+//            farm.addFarmerRelationship(this)
             logger.debug("Add Farmer ${this.id} (${this.getName()}) Farm ${farm.id} (${farm.name}) Relationship")
 
         }
@@ -32,12 +32,12 @@ class Farmer(
 
     fun getName(): String = """${this.firstName} ${this.lastName}"""
 
-    fun getFarms(): Set<Farm> = farms
+    fun getFarms(): List<Farm> = farms
 
     fun removeFarmRelationship(farm: Farm) {
         if (farms.contains(farm)) {
             farms.remove(farm)
-            farm.removeFarmerRelationship(this)
+//            farm.removeFarmerRelationship(this)
             logger.debug("Remove Farmer ${this.id} (${this.getName()}) Farm ${farm.id} (${farm.name}) Relationship")
         }
     }
