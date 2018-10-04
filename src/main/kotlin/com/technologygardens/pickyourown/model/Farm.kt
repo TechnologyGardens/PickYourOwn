@@ -2,6 +2,7 @@ package com.technologygardens.pickyourown.model
 
 import com.technologygardens.pickyourown.model.elements.Site
 import org.hibernate.annotations.Cascade
+import org.hibernate.annotations.GenericGenerator
 import org.hibernate.annotations.Type
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -15,8 +16,10 @@ import javax.validation.constraints.Size
 @Entity
 open class Farm(
         @Id
+        @GeneratedValue(generator = "db-uuid")
+        @GenericGenerator(name="db-uuid", strategy = "uuid")
         @Cascade(org.hibernate.annotations.CascadeType.ALL)
-        val id: String = UUID.randomUUID().toString(),
+        val id: String = "",
         @field:Size(min=1, max = 255)
         var name: String = "",
         //todo add logo of the farm

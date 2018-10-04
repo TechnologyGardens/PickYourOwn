@@ -1,5 +1,6 @@
 package com.technologygardens.pickyourown.model
 
+import org.hibernate.annotations.GenericGenerator
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.transaction.annotation.Transactional
@@ -8,7 +9,9 @@ import javax.persistence.*
 
 @Entity
 class Product(@Id
-              val id: String = UUID.randomUUID().toString(),
+              @GeneratedValue(generator = "db-uuid")
+              @GenericGenerator(name="db-uuid", strategy = "uuid")
+              val id: String = "",
               var name: String = ""
 ) {
     @ManyToMany(fetch = FetchType.EAGER)

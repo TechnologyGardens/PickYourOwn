@@ -1,4 +1,6 @@
 # docker run --name vital-mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -v d:\DB\MySQL:/var/lib/mysql -p 3306:3306 -d mysql
+#docker exec -it vital-mysql bash
+#mysql
 
 #Create Databases
 CREATE DATABASE pyo_dev;

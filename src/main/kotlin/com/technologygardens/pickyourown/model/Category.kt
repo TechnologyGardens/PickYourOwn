@@ -1,5 +1,6 @@
 package com.technologygardens.pickyourown.model
 
+import org.hibernate.annotations.GenericGenerator
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.*
@@ -8,7 +9,9 @@ import javax.persistence.*
 @Entity
 data class Category(
         @Id
-        val id: String = UUID.randomUUID().toString(),
+        @GeneratedValue(generator = "db-uuid")
+        @GenericGenerator(name="db-uuid", strategy = "uuid")
+        val id: String = "",
         var name: String = ""
 ) {
     @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)

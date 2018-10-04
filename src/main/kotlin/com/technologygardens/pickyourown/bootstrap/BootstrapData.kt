@@ -17,7 +17,7 @@ import java.time.ZonedDateTime
 
 
 @Component
-@Profile("default")
+@Profile("default", "dev-postgres")
 class BootstrapData(private var farmRepository: FarmRepository,
                     private var farmerRepository: FarmerRepository,
                     private var productRepository: ProductRepository,
@@ -95,23 +95,23 @@ class BootstrapData(private var farmRepository: FarmRepository,
         strawberries = productRepository.save(strawberries)
 
 
-        var fruits = Category(name = "fruits")
+        var fruits = Category(id="bd11cfc2-0bee-4ded-8551-880e548029b6",name = "fruits")
         fruits = categoryRepository.save(fruits)
         fruits.addProductRelationship(strawberries)
         fruits.addProductRelationship(apples)
 
-        var organic = Category(name = "organic/bio")
+        var organic = Category(id="48916803-909b-45df-b3d7-060242e5f527",name = "organic/bio")
         organic = categoryRepository.save(organic)
         organic.addProductRelationship(strawberries)
         organic.addProductRelationship(apples)
 
         categoryRepository.save(fruits)
         categoryRepository.save(organic)
-        categoryRepository.save(Category(name = "dairy"))
+/*        categoryRepository.save(Category(name = "dairy"))
         categoryRepository.save(Category(name = "meat"))
         categoryRepository.save(Category(name = "confections"))
         categoryRepository.save(Category(name = "vegetables"))
-        categoryRepository.save(Category(name = "cereals (grain, bean and legumes)"))
+        categoryRepository.save(Category(name = "cereals (grain, bean and legumes)"))*/
         apples = productRepository.save(apples)
         strawberries = productRepository.save(strawberries)
 

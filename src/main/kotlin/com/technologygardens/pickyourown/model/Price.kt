@@ -1,5 +1,6 @@
 package com.technologygardens.pickyourown.model
 
+import org.hibernate.annotations.GenericGenerator
 import java.math.BigDecimal
 import java.util.*
 import javax.persistence.*
@@ -7,7 +8,9 @@ import javax.persistence.*
 @Entity
 class Price(
         @Id
-        val id: String = UUID.randomUUID().toString(),
+        @GeneratedValue(generator = "db-uuid")
+        @GenericGenerator(name="db-uuid", strategy = "uuid")
+        val id: String = "",
         @ManyToOne
         @JoinColumn(name = "farm_id")
         val farm: Farm = Farm(),

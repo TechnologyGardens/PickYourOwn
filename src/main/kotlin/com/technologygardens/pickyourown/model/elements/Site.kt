@@ -1,6 +1,7 @@
 package com.technologygardens.pickyourown.model.elements
 
 import com.technologygardens.pickyourown.model.Farm
+import org.hibernate.annotations.GenericGenerator
 import org.hibernate.validator.constraints.URL
 import java.util.*
 import javax.persistence.*
@@ -10,7 +11,9 @@ import javax.validation.constraints.Size
 @Entity
 data class Site(
         @Id
-        val id: String = UUID.randomUUID().toString(),
+        @GeneratedValue(generator = "db-uuid")
+        @GenericGenerator(name="db-uuid", strategy = "uuid")
+        val id: String = "",
         @field:Size(min=0, max = 255)
         var address: String = "",
         @field:Size(min=0, max = 255)

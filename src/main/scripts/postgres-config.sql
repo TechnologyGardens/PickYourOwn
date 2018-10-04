@@ -1,4 +1,6 @@
 # docker run -d --name vital-postgresql -e POSTGRESQL_ADMIN_PASSWORD=root -p 5432:5432 -v d:\DB\Postgresql:/var/lib/postgresql centos/postgresql-96-centos7
+#docker exec -it vital-postgresql bash
+#psql
 
 #Create Databases
 CREATE DATABASE pyo_dev;
@@ -8,7 +10,7 @@ CREATE DATABASE pyo_prod;
 CREATE USER pyo_dev_user WITH PASSWORD 'PickYourOwn2018' LOGIN NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;
 CREATE USER pyo_prod_user WITH PASSWORD 'PickYourOwn2018' LOGIN NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;
 
-
+#Use postgres_create.sql first then set database permissions
 #Database permissions
 REVOKE CONNECT ON DATABASE pyo_dev FROM PUBLIC;
 GRANT CONNECT ON DATABASE pyo_dev TO pyo_dev_user;

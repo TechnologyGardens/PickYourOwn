@@ -1,6 +1,7 @@
 package com.technologygardens.pickyourown.model.elements
 
 import com.technologygardens.pickyourown.utils.minuteFmt
+import org.hibernate.annotations.GenericGenerator
 import java.time.DayOfWeek
 import java.time.ZonedDateTime
 import java.util.*
@@ -12,7 +13,9 @@ import javax.persistence.Id
 @Entity
 data class RegularBusinessHours(
         @Id
-        val id: String = UUID.randomUUID().toString(),
+        @GeneratedValue(generator = "db-uuid")
+        @GenericGenerator(name="db-uuid", strategy = "uuid")
+        val id: String = "",
         var opensAt: ZonedDateTime = ZonedDateTime.now(),
         var closesAt: ZonedDateTime = ZonedDateTime.now()) {
 
