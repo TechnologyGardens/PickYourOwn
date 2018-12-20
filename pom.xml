@@ -7,6 +7,8 @@
 	<artifactId>pickyourown</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
+	<url>http://technologygardens.com/</url>
+
 
 	<name>pickyourown</name>
 	<description>Pick Your Own</description>
@@ -23,6 +25,9 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<kotlin.version>1.2.50</kotlin.version>
+		<spotbugs.version>3.1.9</spotbugs.version>
+		<pmd.version>3.11.0</pmd.version>
+		<checkstyle.version>3.0.0</checkstyle.version>
 	</properties>
 
 	<dependencies>
@@ -76,6 +81,21 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
 			<version>4.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>momentjs</artifactId>
+			<version>2.22.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>tempusdominus-bootstrap-4</artifactId>
+			<version>5.0.0-alpha.16</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>font-awesome</artifactId>
+			<version>5.0.13-1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -136,16 +156,20 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<version>2.7</version>
-				<configuration>
-					<formats>
-						<format>html</format>
-						<format>xml</format>
-					</formats>
-					<check />
-				</configuration>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs</artifactId>
+				<version>${spotbugs.version}</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>${pmd.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${checkstyle.version}</version>
 			</plugin>
 
 		</plugins>
