@@ -76,7 +76,7 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
-			<version>4.1.1</version>
+			<version>4.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -145,7 +145,7 @@
 						<format>html</format>
 						<format>xml</format>
 					</formats>
-					<check />
+					<check/>
 				</configuration>
 			</plugin>
 
